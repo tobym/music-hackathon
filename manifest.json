@@ -1,0 +1,23 @@
+{
+	"BundleType": "Application",
+	
+	"AppIcon": {
+		"36x18": "tutorial.png"
+	},
+	"AppName": {
+		"en": "Songs with Friends"
+	},
+	"SupportedLanguages": [
+		"en"
+	],
+	"RequiredPermissions": [
+		"http://ws.audioscrobbler.com",
+		"http://*.spotify.com", 
+		"http://developer.echonest.com",
+		"developer.echonest.com",
+		"http://spotify.com"
+		"http://*.echonest.com"
+	]
+
+	
+}

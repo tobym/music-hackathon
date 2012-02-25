@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="sp://import/css/adam.css">
+<script src="libs/js/jquery.js"></script>
+<script src="libs/js/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+
+<h1>Apples to Apples</h1>
+
+<p>Question: What is the best song to walk your dog to?</p>
+
+<form>
+	<input type="text" value="" placeholder="Artist"/>
+	<input type="text" value="" placeholder="Song"/>
+	<input class="submit" type="submit" value="Submit" name="Submit"/>
+</form>
+
+
+
+
+</div>
+
+ <script>
+ 
+
+            $(document).ready(function() {
+                /* Instantiate the global sp object; include models & views */
+                var sp = getSpotifyApi(1);
+                var models = sp.require("sp://import/scripts/api/models");
+                var views = sp.require("sp://import/scripts/api/views");
+
+				tabs();
+                	models.application.observe(models.EVENT.ARGUMENTSCHANGED, tabs);
+
+                function tabs() {
+                    var args = models.application.arguments;
+                    console.log(args[0]);
+                    $('.section').hide();
+                    $('#'+args[0]).show();
+                }
+            });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+/*
+var sp = getSpotifyApi(1);
+jQuery.ajaxSettings.traditional = true;  
+
+
+function makePlaylistFromNowPlaying() {
+    var playerTrackInfo = sp.trackPlayer.getNowPlayingTrack(); // gets the currently playing track using the spotify api
+    console.log(playerTrackInfo); // writes the track
+
+
+    if (playerTrackInfo == null) {  // if there is no track playing
+        info("Start playing something and I'll make a playlist of good songs based on that song");
+    } else {
+        var track = playerTrackInfo.track; // stores current track info in variable
+        var artist = track.artists[0].name; // stores artist as array???
+        fetchPlaylist(artist, 25);
+    }
+}
+
+function fetchPlaylist(artist, size) {
+    info('Getting playlist for ' + artist);
+    var url = 'http://developer.echonest.com/api/v4/playlist/basic?api_key=MRRIUCM6B5HAQH3X4&callback=?';
+
+    $.getJSON(url, { 'artist': artist, 'format':'jsonp', 
+            'results': size, 'type':'artist-radio'}, function(data) {
+        if (checkResponse(data)) {
+            $("#results").empty();
+            info("");
+            var curTracks = []
+            for (var i = 0; i < data.response.songs.length; i++) {
+                var song = data.response.songs[i];
+                var song_name = song.title + " by " + song.artist_name;
+                var li = $("<li>").text(song_name);
+                $("#results").append(li);
+            }
+        } else {
+            info("trouble getting results");
+        }
+    });
+}
+
+function info(s) {
+    $("#info").text(s);
+}
+
+function error(s) {
+    info(s);
+}
+
+function checkResponse(data) {
+    if (data.response) {
+        if (data.response.status.code != 0) {
+            error("Whoops... Unexpected error from server. " + data.response.status.message);
+            log(JSON.stringify(data.response));
+        } else {
+            return true;
+        }
+    } else {
+        error("Unexpected response from server");
+    }
+    return false;
+}
+
+$(document).ready(function() {
+    makePlaylistFromNowPlaying();
+});
+
+*/   
+            
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
