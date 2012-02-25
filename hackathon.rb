@@ -44,6 +44,7 @@ class Game
   end
 
   # FIXME what happens if two players submit the same song?
+  # FIXME player cannot submit two songs in the same turn!
   def submit_song(songname, username)
     @turn_state[:submissions] << Submission.new(songname, username)
   end

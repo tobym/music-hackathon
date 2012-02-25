@@ -11,14 +11,25 @@
 
 <script type="text/javascript">
 
-$(document).ready(function() {
-                /* Instantiate the global sp object; include models & views */
-                var sp = getSpotifyApi(1);
-				var models = sp.require('sp://import/scripts/api/models');
+  var api_host = "http://backend:4567/";
 
+  $(document).ready(function() {
+    /* Instantiate the global sp object; include models & views */
+    var sp = getSpotifyApi(1);
+    var models = sp.require('sp://import/scripts/api/models');
 
+    /*
+     * Register username and join the (global) game.
+     */
+    $("#register_btn").on("click", function() {
+      var username = $("#username").val();
+      console.log("Registering " + username);
+      $.post(api_host + "/register", {"username" : username}, function(data) {
+        console.log("Register username response: " + data);
+      });
+    });
 
-});
+  });
 
 </script>
 </head>
@@ -32,6 +43,10 @@ $(document).ready(function() {
 
 	<header>Songville with Friends</header>
 
+        <div id="register">
+          <input type="text" id="username" placeholder="Name"/>
+          <button id="register_btn"/>Register</button>
+        </div>
 
 <div id="main">
 

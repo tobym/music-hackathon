@@ -16,7 +16,8 @@
 		"http://developer.echonest.com",
 		"developer.echonest.com",
 		"http://spotify.com",
-		"http://*.echonest.com"
+		"http://*.echonest.com",
+                "http://backend:4567/"
 	]
 
 	
