@@ -11,12 +11,14 @@
 
 <script type="text/javascript">
 
+
   var api_host = "http://backend:4567/";
 
   $(document).ready(function() {
     /* Instantiate the global sp object; include models & views */
     var sp = getSpotifyApi(1);
     var models = sp.require('sp://import/scripts/api/models');
+	var views = sp.require('sp://import/scripts/api/views');
 
     /*
      * Register username and join the (global) game.
@@ -42,11 +44,18 @@
 
 
 	<header>Songville with Friends</header>
+<form class="username">
+		Enter a User Name <input type="text" placeholder="e.g. 'Felix'"/>
+		<input type="submit" value="Submit" name="Submit"/>	
 
+<<<<<<< HEAD
         <div id="register">
           <input type="text" id="username" placeholder="Name"/>
           <button id="register_btn"/>Register</button>
         </div>
+=======
+</form>
+>>>>>>> working progress
 
 <div id="main">
 
@@ -55,8 +64,11 @@
 
 
 
+<br/>
+
+
 	<form>
-		Your Answer: <input type="text" placeholder="Enter Song"/>
+		Your Answer: <input id="song_answer" type="text" placeholder="Enter Song"/>
 		<input class="new-button" type="submit" value="Submit" name="Submit"/>
 		
 
@@ -81,6 +93,19 @@
 
 <script>
 	
+			$(document).ready(function() {
+				$(':input.new-button').click(function(){
+					var song_name = $(':input#song_answer').val();
+			
+						console.log(song_name);
+				});
+			
+			});
+			
+
+	
+		
+	
 			var sp = getSpotifyApi(1);
 			var models = sp.require('sp://import/scripts/api/models');
 
@@ -89,7 +114,7 @@
 			search.observe(models.EVENT.CHANGE, function() {
 
 			search.tracks.forEach(function(track) {
-			console.log(track);
+//			console.log(track);
 	});
 });
 
