@@ -1,20 +1,22 @@
 /* HTML5 Boilerplate  */
 
 
-a { color: #00e; }
-a:visited { color: #551a8b; }
-a:hover { color: #06e; }
-a:focus { outline: thin dotted; }
-a:hover, a:active { outline: 0; }
+
+header {
+font-size: 20px;
+text-align: center;
+padding: 20px;
+
+}
 
 h1 {
-color: #fff;
+color: #999;
 }
 
 
-p {
+p.question {
 color: #fff;
-
+margin: 0px 0px 10px 0px;
 }
 
 input.submit {
@@ -28,7 +30,27 @@ height: 40px;
 
 }
 
+.enemies {
+margin: 40px 0 0 0;
+}
 
+form.enemy_block {
+margin: 10px 0 0 0;
+padding: 10px 0px 0px 0px;
+
+}
+
+
+input.enemy {
+
+margin: 10px 0px 10px 0px;
+
+}
+
+img.thumb {
+width: 20px;
+height: 20px;
+}
 
 
 @media only screen and (min-width: 35em) {

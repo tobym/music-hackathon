@@ -14,43 +14,35 @@
 <body>
 
 
-<h1>Apples to Apples</h1>
+<div id="main">
 
-<p>Question: What is the best song to walk your dog to?</p>
-
-<form>
-	<input type="text" value="" placeholder="Artist"/>
-	<input type="text" value="" placeholder="Song"/>
-	<input class="submit" type="submit" value="Submit" name="Submit"/>
-</form>
+	<header>Apples to Apples</header>
 
 
 
-
-</div>
-
- <script>
- 
-
-            $(document).ready(function() {
-                /* Instantiate the global sp object; include models & views */
-                var sp = getSpotifyApi(1);
-                var models = sp.require("sp://import/scripts/api/models");
-                var views = sp.require("sp://import/scripts/api/views");
-
-				tabs();
-                	models.application.observe(models.EVENT.ARGUMENTSCHANGED, tabs);
-
-                function tabs() {
-                    var args = models.application.arguments;
-                    console.log(args[0]);
-                    $('.section').hide();
-                    $('#'+args[0]).show();
-                }
-            });
-</script>
+	<p class="question">Question: What is the best song to walk your dog to?</p>
 
 
+
+	<form>
+		Your Answer: <input type="text" placeholder="Enter Song"/>
+		<input class="submit" type="submit" value="Submit" name="Submit"/>
+	</form>
+
+	
+	<div class="enemies">
+		<p class="question">Other Answers</p>
+		<form class="enemy_block">	
+			Player One <input class="enemy" type="text" placeholder=""/>		<a href=""><img class="thumb" src="images/thumb.png"/></a><br/>
+			Player Two <input class="enemy" type="text" placeholder=""/>	 	<a href=""><img class="thumb" src="images/thumb.png"/></a><br/>
+			Player Three: <input class="enemy" type="text" placeholder=""/>		<a href=""><img class="thumb" src="images/thumb.png"/></a><br/>
+			HAL9000 of Echonest: <input class="enemy" type="text" placeholder=""/>		<a href=""><img class="thumb" src="images/thumb.png"/></a>
+		</form>
+	</div>
+
+
+
+</div> <!-- end of main -->
 
 
 
@@ -129,10 +121,7 @@ function checkResponse(data) {
 
 $(document).ready(function() {
     makePlaylistFromNowPlaying();
-});
-
-*/   
-            
+});          
 </script>
 
 
