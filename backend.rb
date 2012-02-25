@@ -44,6 +44,11 @@ get "/gamestate" do
   }.to_json]
 end
 
+# FIXME this needs safe access so bad clients can't screw with the gamestate.
+post "/next_turn" do
+  @@game.next_turn!
+end
+
 # Get one question for the next round.
 get "/question" do
   response = @@game.current_question.to_hash
