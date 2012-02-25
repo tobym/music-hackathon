@@ -5,7 +5,7 @@
 		"36x18": "tutorial.png"
 	},
 	"AppName": {
-		"en": "Songs with Friends"
+		"en": "Songville with Friends"
 	},
 	"SupportedLanguages": [
 		"en"
@@ -15,7 +15,7 @@
 		"http://*.spotify.com", 
 		"http://developer.echonest.com",
 		"developer.echonest.com",
-		"http://spotify.com"
+		"http://spotify.com",
 		"http://*.echonest.com"
 	]
 

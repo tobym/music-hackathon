@@ -9,6 +9,18 @@
 <script src="libs/js/jquery.js"></script>
 <script src="libs/js/jquery.min.js"></script>
 
+<script type="text/javascript">
+
+$(document).ready(function() {
+                /* Instantiate the global sp object; include models & views */
+                var sp = getSpotifyApi(1);
+				var models = sp.require('sp://import/scripts/api/models');
+
+
+
+});
+
+</script>
 </head>
 
 <body>
@@ -16,7 +28,9 @@
  <li><a href="sp://music-hackathon/rules.html"> Read the Rules</a></li>
 
 
-	<header>Apples to Apples</header>
+
+
+	<header>Songville with Friends</header>
 
 
 <div id="main">
@@ -28,7 +42,9 @@
 
 	<form>
 		Your Answer: <input type="text" placeholder="Enter Song"/>
-		<input class="submit" type="submit" value="Submit" name="Submit"/>
+		<input class="new-button" type="submit" value="Submit" name="Submit"/>
+		
+
 	</form>
 
 	
@@ -48,83 +64,26 @@
 
 
 
+<script>
+	
+			var sp = getSpotifyApi(1);
+			var models = sp.require('sp://import/scripts/api/models');
 
+			var search = new models.Search("Bohemian Rhapsody");
+			
+			search.observe(models.EVENT.CHANGE, function() {
 
+			search.tracks.forEach(function(track) {
+			console.log(track);
+	});
+});
 
+search.appendNext();
+                
 
-
-
-
-
-<script type="text/javascript">
-
-/*
-var sp = getSpotifyApi(1);
-jQuery.ajaxSettings.traditional = true;  
-
-
-function makePlaylistFromNowPlaying() {
-    var playerTrackInfo = sp.trackPlayer.getNowPlayingTrack(); // gets the currently playing track using the spotify api
-    console.log(playerTrackInfo); // writes the track
-
-
-    if (playerTrackInfo == null) {  // if there is no track playing
-        info("Start playing something and I'll make a playlist of good songs based on that song");
-    } else {
-        var track = playerTrackInfo.track; // stores current track info in variable
-        var artist = track.artists[0].name; // stores artist as array???
-        fetchPlaylist(artist, 25);
-    }
-}
-
-function fetchPlaylist(artist, size) {
-    info('Getting playlist for ' + artist);
-    var url = 'http://developer.echonest.com/api/v4/playlist/basic?api_key=MRRIUCM6B5HAQH3X4&callback=?';
-
-    $.getJSON(url, { 'artist': artist, 'format':'jsonp', 
-            'results': size, 'type':'artist-radio'}, function(data) {
-        if (checkResponse(data)) {
-            $("#results").empty();
-            info("");
-            var curTracks = []
-            for (var i = 0; i < data.response.songs.length; i++) {
-                var song = data.response.songs[i];
-                var song_name = song.title + " by " + song.artist_name;
-                var li = $("<li>").text(song_name);
-                $("#results").append(li);
-            }
-        } else {
-            info("trouble getting results");
-        }
-    });
-}
-
-function info(s) {
-    $("#info").text(s);
-}
-
-function error(s) {
-    info(s);
-}
-
-function checkResponse(data) {
-    if (data.response) {
-        if (data.response.status.code != 0) {
-            error("Whoops... Unexpected error from server. " + data.response.status.message);
-            log(JSON.stringify(data.response));
-        } else {
-            return true;
-        }
-    } else {
-        error("Unexpected response from server");
-    }
-    return false;
-}
-
-$(document).ready(function() {
-    makePlaylistFromNowPlaying();
-});          
-</script>
+               	
+               	               	
+</script>        	
 
 
 </body>
