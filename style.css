@@ -1,11 +1,12 @@
 /* HTML5 Boilerplate  */
 
 
-
+/* container and blocks */
 header {
 font-size: 20px;
 text-align: center;
-padding: 20px;
+padding: 30px;
+
 
 }
 
@@ -13,15 +14,22 @@ h1 {
 color: #999;
 }
 
+#main {
+border: 1px #fff dashed;
+padding: 20px;
+width: 400px;
+margin: 0px auto;
+
+}
+
+/* Question to individual */.
+
 
 p.question {
 color: #fff;
-margin: 0px 0px 10px 0px;
+margin: 0px 0px 0px 0px;
 }
 
-input.submit {
-
-}
 
 #share {
 border: 1px solid #fff;
@@ -30,6 +38,8 @@ height: 40px;
 
 }
 
+
+/* Enemeies Block  */
 .enemies {
 margin: 40px 0 0 0;
 }
@@ -53,6 +63,17 @@ height: 20px;
 }
 
 
+
+
+/* Rules */
+
+
+#rules {
+text-align:left;
+width: 70%;
+margin: 0px auto;
+
+}
 @media only screen and (min-width: 35em) {
   
 
