@@ -10,7 +10,8 @@ width: 100%;
 header {
 font-size: 20px;
 text-align: center;
-background: #262626;
+background-image:url("images/nav_tile.png");
+background-repeat: repeat-x;
 height: 38px;
 width: 100%;
 clear: both;
@@ -77,6 +78,7 @@ height: 100px;
 
 #register_and_submit {
 width: 100%;
+font-style: helvetica;
 
 }
 
@@ -88,14 +90,15 @@ width: 100%;
 h1.intro_title {
 margin: 30px 0 80px 0px;
 text-align: center;
-font-size: 24px;
+font-size: 50px;
+line-height: 40px;
 }
 
 p.intro_copy {
 margin: 20px auto;
 font-size: 20px;
-line-height: 25px;
-width: 320px;
+line-height: 35px;
+width: 600px;
 }
 
 #register {
@@ -103,6 +106,21 @@ text-align: center;
 
 }
 
+input#username {
+width: 200px;
+padding: 4px 10px;
+text-align: center;
+font-style: italic;
+font-size: 18px;
+}
+
+#register_btn {
+background: #80bb00;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+padding: 8px 20px;
+
+}
 
 /* see question screen */
 .select_song {

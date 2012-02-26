@@ -205,22 +205,21 @@
 
 
 <div id="register_and_submit"> <!-- TOP LEVEL DIV-->
-	<div id="welcome_screen">
-		<h1 class="intro_title">What's the best song ______?</h1>
+
+
+
+	<div id="welcome_screen"> <!-- WELCOME/START -->
+		<h1 class="intro_title"> What's the best song ______?</h1>
 		
 		<p class="intro_copy"> Fight for your honor against other ninjas (AKA your friends) by picking the best song for every situation</p>
-	
-	
-		<div id="message">
-    	Welcome
-    	</div>
-	</div>
+
+	</div> 
 
   <!-- REGISTER -->
-  <div id="register">
-    <input type="text" id="username" placeholder="Enter Your Name"/>
-    <button id="register_btn">Play Now</button>
-  </div>
+  	<div id="register">
+    	<input type="text" id="username" placeholder="Enter Your Name"/>
+	    <button id="register_btn">Play Now</button>
+  	</div>
 
 	
    <!-- QUESTION and SUBMIT -->
@@ -252,6 +251,7 @@
 <script>
 $('#register_btn').click(function() {
 	$('.your_opponents').show();
+	$('#welcome_screen').hide();
 });
 </script>
 
@@ -385,6 +385,11 @@ $('#register_btn').click(function() {
   <div id="game_dashboard">
     <h2>this is the game dashboard</h2>
   </div>
+  
+  
+  <div id="message">
+    		Welcome
+    	</div>
   
 </body>
 </html>
