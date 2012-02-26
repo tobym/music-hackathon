@@ -27,8 +27,8 @@ curl localhost:4567/submit_song -d turn_id=$turn_id -d username=tal -d songname=
 
 echo "DEBUG: register"
 curl localhost:4567/register -d username=jeff | python -m json.tool
-echo "DEBUG: submit song"
-curl localhost:4567/submit_song -d turn_id=$turn_id -d username=jeff -d songname="la grange" | python -m json.tool
+# echo "DEBUG: submit song"
+# curl localhost:4567/submit_song -d turn_id=$turn_id -d username=jeff -d songname="la grange" | python -m json.tool
 
 echo "DEBUG: gamestate"
 curl localhost:4567/gamestate | python -m json.tool
