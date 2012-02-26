@@ -45,12 +45,24 @@
         $("#song_and_artist_name").html(track.name + ", by " + track.artists[0].name);
         Preview.songname = track.name;
         Preview.songuri = track.uri;
-        var image = new views.Image(track.album.data.cover);
-        $(image.node).css('width', '150px');
-        $(image.node).css('height', '150px');
-        $(image.node).css('background-size', '100%');
-        $('#preview .preview_song_left').append(image.node);
 
+        // the preview section
+        var image = new views.Image(track.album.data.cover);
+        // $(image.node).css('width', '150px');
+        // $(image.node).css('height', '150px');
+        // $(image.node).css('background-size', '100%');
+        // $('#preview .preview_song_left').append(image.node);
+
+        var tempPlaylist = new models.Playlist();
+        tempPlaylist.add(track);
+        var playlistArt = new views.Player();
+        playlistArt.track = track;
+        playlistArt.context = tempPlaylist;
+        $("#preview .preview_song_left").html("").append(playlistArt.node);
+        // $("#preview .preview_song_left").append(playlistArt.node);
+
+
+        // the "your submission" section in the Voting view
         image = new views.Image(track.album.data.cover);
         $(image.node).css('width', '150px');
         $(image.node).css('height', '150px');
@@ -191,6 +203,7 @@
         console.log("the songid is: " + sub.songid);
         var song_play_id = "#" + sub.songid + " .play_song";
         console.log(song_play_id + " jquery found: " + $(song_play_id).size());
+        // $(song_play_id).html("loading the player for " + sub.songname);
         $(song_play_id).html("loading the player for " + sub.songname);
       });
 
@@ -469,6 +482,7 @@ $(document).ready(function() {
     <div class="preview_song">
 	    <p class="internal_copy_three">IS THIS THE SONG YOU WERE LOOKING FOR?</p>
 		<div class="preview_song_left">	</div>
+		<div class="preview_song_player">	</div>
 		<div id="song_and_artist_name"> SONG AND ARTIST NAME HERE!!!!</div>
     	<div class="preview_song_right"><button data-action="submit" id="preview_submit" class="transition">SUBMIT!</button>
     	</div>   
