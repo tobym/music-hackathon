@@ -28,46 +28,51 @@
     api_host : "http://backend:4567",
     username : "",
     turn_id : "",
-    // Auto re-syncs game state if it is messed up for some reason.
+    // Wraps jQuery.post and auto re-syncs game state if it is messed up for some reason.
     post : function(path, data, success) {
+      console.log("Inside Game.post");
       data.turn_id = Game.turn_id;
-      data.username = Game.username;
+      console.log(data);
+      var url = this.api_host + path;
+      console.log(url);
       $.ajax({
         type: 'POST',
-        url: this.api_host + path,
+        url: url,
         data: data,
-        success: success,
-        statusCode: {
-          400: function(data) {
-            var err = "Got 400: " + data.message;
-            console.log(err);
-
-            console.log("Got 400: " + data.message);
-            if ("resync" == data.action) {
-              this.update_message("Game out of sync...resyncing");
-              refreshGamestate();
-            };
+        success: function(data, textStatus, jqXHR) {
+          success(data, textStatus, jqXHR);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          if (400 == jqXHR.status) {
+            // console.debug(jqXHR);
+            // console.debug(textStatus);
+            // console.debug(errorThrown);
+            // parse responseText
+            refreshGamestate();
+            Game.update_message("Woops, had an error. Try that one more time!");
+            console.log("got a 400 in the Error callback");
           }
         },
         dataType: "json"
       });
-      
     }
   };
 
   function displayGamestate(state) {
-    $dashboard = $("#game_dashboard");
+    var $dashboard = $("#game_dashboard");
 
-    tmpl = $("#gamestate_tmpl").html();
+    var tmpl = $("#gamestate_tmpl").html();
     $dashboard.html(Mustache.render(tmpl, state));
-  };
+  }
 
   function refreshGamestate() {
+    console.log("refreshing game state...");
     $.get(Game.api_host + "/gamestate", function(data) {
       Game.turn_id = data.turn_id;
       displayGamestate(data);
+      console.log("successfully refreshed game state.");
     });
-  };
+  }
 
   $(document).ready(function() {
     /* Instantiate the global sp object; include models & views */
@@ -81,7 +86,7 @@
     $("#register_btn").on("click", function() {
       var username = $("#username").val();
       console.log("Registering " + username);
-      $.post(Game.api_host + "/register", {"username" : username}, function(data) {
+      Game.post("/register", {"username" : username}, function(data) {
         console.log("Register username response: " + data);
 
         Game.update_message(data.message);
@@ -105,7 +110,7 @@
      */
     $("#submit_btn").on("click", function() {
       var songname = $("#submission_input").val();
-      $.post(Game.api_host + "/submit_song", {"username" : Game.username, "turn_id" : Game.turn_id, "songname" : songname}, function(data) {
+      Game.post("/submit_song", {"username" : Game.username, "songname" : songname}, function(data) {
         console.log(data);
       });
     });
@@ -278,7 +283,7 @@ function win_and_slide() {
     <h3>Question Keywords</h3>
     <ul>
       {{#question.keywords}}
-      <li>{{question.keywords}}</li>
+      <li>{{.}}</li>
       {{/question.keywords}}
     </ul>
     <h3>Round</h3>
