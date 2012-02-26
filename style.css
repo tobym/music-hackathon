@@ -273,6 +273,48 @@ border-radius: 5px;
 
 }
 
+
+/* VOTING STATE */
+.voting_wrapper {
+	width: 600px;
+	height: 400px;
+	margin: 90px auto;
+	border: 1px solid #000;
+	-webkit-border-radius: 5px;
+}
+
+
+.voting_left {
+	width: 400px;
+	float: left;
+}
+
+
+.voting_right {
+	width: 200px;
+	height: 400px;
+	text-align:center;
+	float: right;
+	background-color: #000;
+	-webkit-border-radius: 0px 0px 5px 0px;
+	border-radius: 0px 0px 5px 0px;
+
+}
+
+.voting_submission_text {
+margin: 40px 0 0 0;
+
+}
+
+.your_song_submission {
+
+}
+
+.secondary_copy {
+width: 100%;
+padding: 10px 10px;
+}  		
+
 .internal_copy{
 font-size: 10pt;
 }
@@ -287,8 +329,10 @@ font-size: 10pt;
 padding: 4px 10px;
 }
 
-
-
+.internal_copy_four {
+font-size: 10pt;
+padding: 10px 10px;
+}
 
 
 
