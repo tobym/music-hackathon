@@ -118,11 +118,9 @@
 
     // Pull latest state and displays it.
     refreshGamestate : function() {
-      console.log("refreshing game state...");
       $.get(Game.api_host + "/gamestate", function(data) {
         Game.turn_id = data.turn_id;
         Game.displayGamestate(data);
-        console.log("successfully refreshed game state.");
       });
     },
 
