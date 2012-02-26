@@ -30,10 +30,24 @@
     stopAndHide : function() {
       $("#pending").hide();
       // FIXME stop polling for submissions
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+      }
     },
     startAndShow : function() {
       $("#pending").show();
+      // this.intervalId = setInterval(Pending.checkPlayersSubmissions, 1000);
       // FIXME start polling to see if everyone else is done submitting
+    },
+    checkPlayersSubmissions : function() {
+      $.get(Game.api_host + "/gamestate", function(data) {
+        // Update X out of Y players have submitted a song
+        console.log(data.submissions.length + " out of " + data.players.length + " players have submitted");
+        // Transition to next state if all players have submitted.
+        if (data.submissions.length === data.players.length) {
+          Game.transition("see_submissions"); // this will also clear the polling
+        }
+      });
     }
   };
 
@@ -169,9 +183,12 @@
                      Preview.startAndShow();  // So you can submit a song.
                      Game.state = "preview";
                    } else if ("submit" === action && "preview" === Game.state) {
-                     hideAllStates();
-                     Pending.startAndShow();
-                     Game.state = "pending";
+                     var songname = $("#submission_input").val();
+                     Game.post("/submit_song", {"username" : Game.username, "songname" : songname}, function(data) {
+                        hideAllStates();
+                        Pending.startAndShow();
+                        Game.state = "pending";
+                     });
                    } else if ("see_submissions" === action && "pending" === Game.state) {
                      hideAllStates();
                      Voting.startAndShow();
@@ -223,16 +240,6 @@
           $("#submission").show();
           Game.displayGamestate(data);
         });
-      });
-    });
-
-    /*
-     * Submit your answer.
-     */
-    $("#submit_btn").on("click", function() {
-      var songname = $("#submission_input").val();
-      Game.post("/submit_song", {"username" : Game.username, "songname" : songname}, function(data) {
-        console.log(data);
       });
     });
 
