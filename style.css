@@ -127,48 +127,67 @@ padding: 8px 20px;
 background: #252525;
 -webkit-border-radius: 5px;
 border-radius: 5px;
-margin: 20px 0 0 20px;
-width: 70%;
+margin: 20px auto;
+width: 600px;
+height: 100px;
 padding: 2px 0 0 20px;
+font-size: 10pt;
+
 
 }
 
+
+#round_and_question {
+width: 600px;
+clear:both;
+margin: 0px auto;
+padding: 20px;
+border: 1px dashed #fff;
+}
+
+
 #round {
-margin: 20px 0 0 0;
+float: left;
+background: #252525;
+padding: 2px 4px;
+width: 100px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
 }
 
 
 #current_question {
-font-size: 22px;
-float: right;
-margin: 0 280px 0px 0px;
-
+	font-size: 22px;
+	float: right;
 }
 
 #submission_input {
-width: 300px;
-background: #9c9c9c;
-padding: 0px 0px 0px 10px;
--webkit-border-radius: 5px;
-border-radius: 5px;
-
+	width: 300px;
+	background: #9c9c9c;
+	margin: 0px auto;
+	padding: 0px 0px 0px 10px;
+	border: 1px solid #9c9c9c;
+	margin: 15px 0 0 0;
+	color: #000;
 }
 
 #submit_btn {
-	width: 100px;
+	width: 28px;
+	text-align:center;
 	color: black;
-	background: red;
+	background-image: url("images/search_button.png");
 	-webkit-border-radius: 5px;
 }
 
 .your_opponents {
-margin: 20px 0 0 20px;
-width: 70%;
-height: 200px;
-background: #252525;
-padding: 2px 0 0 20px;
--webkit-border-radius: 5px;
-border-radius: 5px;
+	margin: 0px auto;
+	width: 600px;
+	height: 200px;
+	background: #252525;
+	padding: 20px 0 0 20px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	font-size: 10pt;
 
 }
 
