@@ -20,11 +20,10 @@ end
 # Turn ID is a randomly generated ID. Eventually it should be a GUID or something.
 # Turn Number is a sequential number, reminiscent of a boxing match.
 class Game
-  attr_accessor :players, :current_question_idx, :turn_state, :turn_id, :turn_number, :song_to_uri_ghettoness
+  attr_accessor :players, :current_question_idx, :turn_state, :turn_id, :turn_number
 
   def initialize(questions)
     @players = []
-    @song_to_uri_ghettoness = {}
     @questions = questions
     @turn_id = rand
     @turn_number = 0 # is incremented immediately by next_turn!
@@ -55,9 +54,6 @@ class Game
   end
 
   def submit_song(songname, username, songuri)
-    # Because at this stage in the game, this is less error-prone than adding a Song class, though I should have done that in the first place.
-    @song_to_uri_ghettoness[songname] = songuri
-
     return "Submit a real song!" if songname.strip == ""
 
     if existing_idx = submissions.index{|sub| sub.submitter == username }
@@ -70,7 +66,7 @@ class Game
       return "Too bad! Someone else already submitted #{submission.songname}"
     end
 
-    @turn_state[:submissions] << Submission.new(songname, username)
+    @turn_state[:submissions] << Submission.new(songname, username, songuri)
 
     true
   end
@@ -119,10 +115,11 @@ class Game
 end
 
 class Submission
-  attr_accessor :songname, :submitter, :votes
-  def initialize(songname, submitter)
+  attr_accessor :songname, :submitter, :votes, :songuri
+  def initialize(songname, submitter, songuri)
     @songname = songname
     @submitter = submitter
+    @songuri = songuri
     @votes = []
   end
 end

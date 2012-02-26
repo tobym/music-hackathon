@@ -41,6 +41,7 @@ get "/gamestate" do
     :submissions => @@game.submissions.map { |sub|
       {
         :songname => sub.songname,
+        :songuri => sub.songuri,
         :submitter => sub.submitter,
         :votes => sub.votes
       }
