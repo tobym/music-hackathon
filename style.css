@@ -10,9 +10,40 @@ width: 100%;
 header {
 font-size: 20px;
 text-align: center;
-padding: 30px;
+background: #262626;
+height: 38px;
+width: 100%;
+clear: both;
+padding: 8px 0 0 0;
 
+}
 
+#nav {
+	background-image:url("images/tab_bar.png");
+	background-repeat: repeat-x;
+	height: 28px;
+	width: 100%;
+	padding: 8px 0px 0 0;
+	text-align: center;
+}
+
+#nav li {
+	display: inline;
+	color: #fff;
+	padding: 3px 10px;
+	border: 1px solid #000;
+	background: #000;
+	text-align: center;
+	-webkit-border-radius: 3px;
+}
+#nav li:active {
+	display: inline;
+	padding: 3px 10px;
+	border: 1px solid #000;
+	background: #000;
+	text-align: center;
+	-webkit-border-radius: 3px;
+	color: #fff;
 }
 
 h1 {
