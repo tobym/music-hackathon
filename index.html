@@ -234,6 +234,7 @@
                    } else if ("next_round" === action && "winner" === Game.state) {
                      Game.post("/next_turn", {"username" : Game.username, "songname" : songname}, function(data) {
                       hideAllStates();
+                      Game.voted = false;
                       Question.startAndShow();
                       Game.state = "question";
                      });
