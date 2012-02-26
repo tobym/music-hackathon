@@ -34,13 +34,17 @@ end
 
 get "/gamestate" do
   [200, {
-    :players => @@game.players,
+    :question => @@game.current_question.to_hash,
+    :players => @@game.players.map{|name| {:username => name}},
     :turn_id => @@game.turn_state[:turn_id],
-    :submissions => @@game.submissions.map{|sub| {
-      :songname => sub.songname,
-      :submitter => sub.submitter,
-      :votes => sub.votes
-    }}
+    :round => @@game.turn_number,
+    :submissions => @@game.submissions.map { |sub|
+      {
+        :songname => sub.songname,
+        :submitter => sub.submitter,
+        :votes => sub.votes
+      }
+    }
   }.to_json]
 end
 

@@ -6,13 +6,63 @@
 <meta charset="utf-8">
 <link rel="stylesheet" href="style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="sp://import/css/adam.css">
-<script src="libs/js/jquery.js"></script>
 <script src="libs/js/jquery.min.js"></script>
+<script src="libs/js/mustache.js"></script>
 
 <script type="text/javascript">
 
+  var Game = {
+    // User-visible message
+    update_message: function(msg) {
+      $("#message").html(msg);
+      this.log(msg);
+    },
+    // Debug log
+    log: function(msg) {
+      $("#debug_log").append("<p>" + msg + "</p>");
+    },
+    api_host : "http://backend:4567",
+    username : "",
+    turn_id : "",
+    // Auto re-syncs game state if it is messed up for some reason.
+    post : function(path, data, success) {
+      data.turn_id = Game.turn_id;
+      data.username = Game.username;
+      $.ajax({
+        type: 'POST',
+        url: this.api_host + path,
+        data: data,
+        success: success,
+        statusCode: {
+          400: function(data) {
+            var err = "Got 400: " + data.message;
+            console.log(err);
 
-  var api_host = "http://backend:4567/";
+            console.log("Got 400: " + data.message);
+            if ("resync" == data.action) {
+              this.update_message("Game out of sync...resyncing");
+              refreshGamestate();
+            };
+        },
+        dataType: "json"
+      });
+      
+    }
+  };
+
+  function displayGamestate(state) {
+    $dashboard = $("#game_dashboard");
+
+    tmpl = $("#gamestate_tmpl").html();
+    $dashboard.html(Mustache.render(tmpl, state));
+  };
+
+  function refreshGamestate() {
+    $.get(Game.api_host + "/gamestate", function(data) {
+      Game.turn_id = data.turn_id;
+      displayGamestate(data);
+    });
+  };
 
   $(document).ready(function() {
     /* Instantiate the global sp object; include models & views */
@@ -21,14 +71,42 @@
 	var views = sp.require('sp://import/scripts/api/views');
 
     /*
-     * Register username and join the (global) game.
+     * Register username and join the (current global) game.
      */
     $("#register_btn").on("click", function() {
       var username = $("#username").val();
       console.log("Registering " + username);
-      $.post(api_host + "/register", {"username" : username}, function(data) {
+      $.post(Game.api_host + "/register", {"username" : username}, function(data) {
         console.log("Register username response: " + data);
+
+        Game.update_message(data.message);
+        Game.username = data.username;
+        Game.turn_id = data.turn_id;
+
+        // Transition to game state.
+        $.get(Game.api_host + "/gamestate", function(data) {
+          $("#register").hide();
+          $("#current_question").html(data.question.question);
+          $("#round").html("Round " + data.round);
+          // $("#current_question_keywords").html(data.question.keywords);
+          $("#submission").show();
+          displayGamestate(data);
+        });
       });
+    });
+
+    /*
+     * Cast your vote.
+     */
+    $("#submit_btn").on("click", function() {
+      var songname = $("#submission_input").val();
+      $.post(Game.api_host + "/submit_song", {username : Game.username, turn_id : Game.turn_id, songname : }, function(data) {
+
+      });
+    });
+
+    $("#debug").on("click", function() {
+      refreshGamestate();
     });
 
   });
@@ -38,29 +116,39 @@
 
 <body>
 
- <li><a href="sp://music-hackathon/rules.html"> Read the Rules</a></li>
+  <li><a href="sp://music-hackathon/rules.html"> Read the Rules</a></li>
 
+  <button id="debug">Refresh gamestate</button>
 
+  <header>Songville with Friends</header>
 
+  <div id="round">
+    1
+  </div>
 
-	<header>Songville with Friends</header>
-<form class="username">
-		Enter a User Name <input type="text" placeholder="e.g. 'Felix'"/>
-		<input type="submit" value="Submit" name="Submit"/>	
+  <div id="message">
+    Welcome
+  </div>
 
-<<<<<<< HEAD
-        <div id="register">
-          <input type="text" id="username" placeholder="Name"/>
-          <button id="register_btn"/>Register</button>
-        </div>
-=======
-</form>
->>>>>>> working progress
+  <!-- REGISTER -->
+  <div id="register">
+    <input type="text" id="username" placeholder="Name"/>
+    <button id="register_btn">Register</button>
+  </div>
 
-<div id="main">
+  <div id="submission" style="display:none">
+    <div id="current_question"></div>
+    <div id="current_question_keywords"></div>
 
+    <div>
+      <input type="text" id="submission_input" placeholder="Song title..."/>
+      <button id="submit_btn">Submit song</button>
+    </div>
+  </div>
 
-	<p class="question">Question: What is the best song to walk your dog to?</p>
+  <div id="game_dashboard">
+    <h2>this is the game dashboard</h2>
+  </div>
 
 
 
@@ -72,65 +160,91 @@
 		<input class="new-button" type="submit" value="Submit" name="Submit"/>
 		
 
-	</form>
-
-	
-	<div class="enemies">
-		<p class="question">Other Answers</p>
-		<form class="enemy_block">	
-			Player One: <input class="enemy" type="text" placeholder=""/>		<a href=""><img class="thumb" src="images/thumb.png"/></a><br/>
-			Player Two: <input class="enemy" type="text" placeholder=""/>	 	<a href=""><img class="thumb" src="images/thumb.png"/></a><br/>
-			Player Three: <input class="enemy" type="text" placeholder=""/>		<a href=""><img class="thumb" src="images/thumb.png"/></a><br/>
-			HAL9000 of Echonest: <input class="enemy" type="text" placeholder=""/>		<a href=""><img class="thumb" src="images/thumb.png"/></a>
-		</form>
-	</div>
 
 
 
-</div> <!-- end of main -->
 
 
 
-<script>
-	
-			$(document).ready(function() {
-				$(':input.new-button').click(function(){
-					var song_name = $(':input#song_answer').val();
-			
-						console.log(song_name);
-				});
-			
-			});
-			
 
-	
-		
-	
-			var sp = getSpotifyApi(1);
-			var models = sp.require('sp://import/scripts/api/models');
+  <div id="main" style="display:none">
 
-			var search = new models.Search("Bohemian Rhapsody");
-			
-			search.observe(models.EVENT.CHANGE, function() {
 
 			search.tracks.forEach(function(track) {
 //			console.log(track);
 	});
 });
-
-search.appendNext();
-                
-
-               	
-               	               	
-</script>        	
+    <p class="question">Question: What is the best song to walk your dog to?</p>
 
 
+
+    <form>
+      Your Answer: <input type="text" placeholder="Enter Song"/>
+      <input class="new-button" type="submit" value="Submit" name="Submit"/>
+
+
+    </form>
+
+
+    <div class="enemies">
+      <p class="question">Other Answers</p>
+      <form class="enemy_block">	
+        Player One: <input class="enemy" type="text" placeholder=""/>		<a href=""><img class="thumb" src="images/thumb.png"/></a><br/>
+        Player Two: <input class="enemy" type="text" placeholder=""/>	 	<a href=""><img class="thumb" src="images/thumb.png"/></a><br/>
+        Player Three: <input class="enemy" type="text" placeholder=""/>		<a href=""><img class="thumb" src="images/thumb.png"/></a><br/>
+        HAL9000 of Echonest: <input class="enemy" type="text" placeholder=""/>		<a href=""><img class="thumb" src="images/thumb.png"/></a>
+      </form>
+    </div>
+
+
+
+  </div> <!-- end of main -->
+
+
+
+  <script>
+
+    var sp = getSpotifyApi(1);
+    var models = sp.require('sp://import/scripts/api/models');
+
+    var search = new models.Search("Bohemian Rhapsody");
+
+    search.observe(models.EVENT.CHANGE, function() {
+
+      search.tracks.forEach(function(track) {
+        console.log(track);
+      });
+    });
+
+    search.appendNext();
+  </script>        	
+
+
+  <script id="gamestate_tmpl" type="text/html">
+    <h2>Game state</h2>
+    <h3>Question</h3>
+    <p>{{question.question}}</p>
+    <h3>Question Keywords</h3>
+    <ul>
+      {{#question.keywords}}
+      <li>{{question.keywords}}</li>
+      {{/question.keywords}}
+    </ul>
+    <h3>Round</h3>
+    <p>Round {{round}}</p>
+    <h3>Players</h3>
+    <ul>
+      {{#players}}
+      <li>{{username}}</li>
+      {{/players}}
+    </ul>
+    <h3>Submissions</h3>
+    <ul>
+      {{#submissions}}
+      <li>{{songname}} :: submitted by {{submitter}}</li>
+      {{/submissions}}
+    </ul>
+  </script>
+  
 </body>
 </html>
-
-
-
-
-
-

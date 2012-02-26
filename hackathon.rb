@@ -17,13 +17,16 @@ class Question
 end
 
 # Maintains the game state
+# Turn ID is a randomly generated ID. Eventually it should be a GUID or something.
+# Turn Number is a sequential number, reminiscent of a boxing match.
 class Game
-  attr_accessor :players, :current_question_idx, :turn_state, :turn_id
+  attr_accessor :players, :current_question_idx, :turn_state, :turn_id, :turn_number
 
   def initialize(questions)
     @players = []
     @questions = questions
     @turn_id = rand
+    @turn_number = 0 # is incremented immediately by next_turn!
     next_turn!
   end
 
@@ -35,6 +38,7 @@ class Game
   # Changes the current question.
   # Eventually, make sure questions don't repeat.
   def next_turn!
+    @turn_number += 1
     @current_question_idx = rand(@questions.length)
     @turn_state = new_turn_state
   end
