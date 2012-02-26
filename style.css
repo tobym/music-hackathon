@@ -193,6 +193,63 @@ border-radius: 5px;
 
 
 
+
+/* PREVIEW SONG STATE */
+
+#preview {
+width: 100%;
+
+}
+
+.preview_round_status {
+width: 600px;
+margin: 0x auto;
+}
+
+.preview_song {
+width: 600px;
+height: 280px;
+margin: 20px auto;
+padding: 20px 10px;
+clear: both;
+background: #252525;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+}
+
+.preview_song .preview_song_left {
+	float: left;
+	width: 400px;
+}
+
+.preview_song .preview_song_right {
+	float: right;
+	width: 200px;
+	height: 200px;
+	border: 1px solid #fff;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+
+}
+
+.internal_copy{
+font-size: 10pt;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Song List Div */
 
 #song_list {
