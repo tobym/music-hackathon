@@ -188,10 +188,7 @@
 </head>
 
 <body>
-  <div id="debug_log" style="clear:both">
-    <h2>Debug Log</h2>
-  </div>
-  
+
 
   <button id="debug">Refresh gamestate</button>
 
@@ -205,34 +202,58 @@
   	</ul>
   </div>
 
-  <header>Songville with Friends</header>
 
-  <div id="round">
-    1
-  </div>
 
-  <div id="message">
-    Welcome
-  </div>
+<div id="register_and_submit"> <!-- TOP LEVEL DIV-->
+	<div id="welcome_screen">
+		<h1 class="intro_title">What's the best song ______?</h1>
+		
+		<p class="intro_copy"> Fight for your honor against other ninjas (AKA your friends) by picking the best song for every situation</p>
+	
+	
+		<div id="message">
+    	Welcome
+    	</div>
+	</div>
 
   <!-- REGISTER -->
   <div id="register">
-    <input type="text" id="username" placeholder="Name"/>
-    <button id="register_btn">Register</button>
+    <input type="text" id="username" placeholder="Enter Your Name"/>
+    <button id="register_btn">Play Now</button>
   </div>
+
+	
+   <!-- QUESTION and SUBMIT -->
+	<div id="current_question"></div>
 
   <div id="submission" style="display:none">
-    <div id="current_question"></div>
-    <div id="current_question_keywords"></div>
-
-    <div>
-      <input type="text" id="submission_input" placeholder="Song title..."/>
-      <button id="submit_btn">Submit song</button>
-    </div>
+   <div id="round">
   </div>
 
 
+    <div id="current_question_keywords"></div>
+
+    <div class="select_song">
+      SELECT YOUR SONG: <input type="text" id="submission_input" placeholder="Song title..."/>
+      <button id="submit_btn">FIND</button>	
+    </div>
+    <div class="your_opponents" style="display:none">
+  		<p>YOUR OPPONENTS</p>
+  </div>
+
+
+
+  	
+  	</div>
+</div><!-- end of register_and_submit -->
+
 <br/>
+
+<script>
+$('#register_btn').click(function() {
+	$('.your_opponents').show();
+});
+</script>
 
 <!-- Main begins here -->
 <div id="main">
@@ -357,5 +378,13 @@
     </ul>
   </script>
 
+<div id="debug_log" style="clear:both">
+    <h2>Debug Log</h2>
+  </div>
+  
+  <div id="game_dashboard">
+    <h2>this is the game dashboard</h2>
+  </div>
+  
 </body>
 </html>

@@ -58,15 +58,101 @@ min-width: 535px;
 }
 
 
+
+
+
 /* Your Song Div */
+
+
+
+
 #your_song {
 border: 1px #000 solid;
 width: 100%;
-height: 200px;
+height: 100px;
 
 }
 
 
+
+#register_and_submit {
+width: 100%;
+
+}
+
+/* welcome screen */
+#welcome_screen {
+
+}
+
+h1.intro_title {
+margin: 30px 0 80px 0px;
+text-align: center;
+font-size: 24px;
+}
+
+p.intro_copy {
+margin: 20px auto;
+font-size: 20px;
+line-height: 25px;
+width: 320px;
+}
+
+#register {
+text-align: center;
+
+}
+
+
+/* see question screen */
+.select_song {
+background: #252525;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+margin: 20px 0 0 20px;
+width: 70%;
+padding: 2px 0 0 20px;
+
+}
+
+#round {
+margin: 20px 0 0 0;
+}
+
+
+#current_question {
+font-size: 22px;
+float: right;
+margin: 0 280px 0px 0px;
+
+}
+
+#submission_input {
+width: 300px;
+background: #9c9c9c;
+padding: 0px 0px 0px 10px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+
+}
+
+#submit_btn {
+	width: 100px;
+	color: black;
+	background: red;
+	-webkit-border-radius: 5px;
+}
+
+.your_opponents {
+margin: 20px 0 0 20px;
+width: 70%;
+height: 200px;
+background: #252525;
+padding: 2px 0 0 20px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+
+}
 
 
 
