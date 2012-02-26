@@ -76,7 +76,7 @@ height: 100px;
 
 
 
-#register_and_submit {
+#registration {
 width: 100%;
 font-style: helvetica;
 
@@ -101,7 +101,7 @@ line-height: 35px;
 width: 600px;
 }
 
-#register {
+#register_form {
 text-align: center;
 
 }
