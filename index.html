@@ -28,13 +28,11 @@
 
     // Displays the given game state.
     displayGamestate : function (state) {
-      var $dashboard = $("#game_dashboard");
       var dashboard_tmpl = $("#gamestate_tmpl").html();
-      $dashboard.html(Mustache.render(dashboard_tmpl, state));
+      $("#game_dashboard").html(Mustache.render(dashboard_tmpl, state));
 
-      var $main = $("#main");
       var main_tmpl = $("#main_tmpl").html();
-      $dashboard.html(Mustache.render(main_tmpl, state));
+      $("#main").html(Mustache.render(main_tmpl, state));
     },
 
     // Pull latest state and displays it.
