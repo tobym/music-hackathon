@@ -29,16 +29,17 @@
   var Pending = {
     stopAndHide : function() {
       $("#pending").hide();
-      // FIXME stop polling for submissions
       if (this.intervalId) {
         clearInterval(this.intervalId);
       }
     },
     startAndShow : function() {
       $("#pending").show();
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+      }
       this.intervalId = setInterval(Pending.checkPlayersSubmissions, 1000);
       console.log("pending intervalId: " + this.intervalId);
-      // FIXME start polling to see if everyone else is done submitting
     },
     checkPlayersSubmissions : function() {
       $.get(Game.api_host + "/gamestate", function(data) {
@@ -56,11 +57,28 @@
   var Voting = {
     stopAndHide : function() {
       $("#voting").hide();
-      // FIXME stop polling for votes
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+      }
     },
     startAndShow : function() {
       $("#voting").show();
-      // FIXME start polling to see if everyone else is done voting
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+      }
+      this.intervalId = setInterval(Voting.checkPlayersVotes, 1000);
+      console.log("pending intervalId: " + this.intervalId);
+    },
+    checkPlayersVotes : function() {
+      $.get(Game.api_host + "/winner", function(data) {
+        // Update X out of Y players have voted on a song
+        console.log(data.num_voted + " players have voted");
+        $("#votes_so_far").html(data.num_voted);
+        // Transition to next state if all players have submitted.
+        if (0 === data.num_not_voted) {
+          Game.transition("see_winner"); // this will also clear the polling
+        }
+      });
     }
   };
 
@@ -193,11 +211,13 @@
                         Game.state = "pending";
                      });
                    } else if ("see_submissions" === action && "pending" === Game.state) {
+                     // NOTE: This transission should only be triggered by the automatic state check, not by a button.
                      hideAllStates();
-                     Voting.startAndShow();
+                     Voting.startAndShow(); // This starts polling and activates the "vote" buttons next to each song.
                      Game.state = "voting";
                    } else if ("vote" === action && "voting" === Game.state) {
-                     // FIXME wait for automatic transition based on state of other player's votes.
+                     // noop. "see_submissions" moving us into the Voting state, and activates the vote buttons, and the vote polling. When everyone has voted, the state automatically transitions to "winner".
+                   } else if ("see_winner" === action && "voting" === Game.state) {
                      hideAllStates();
                      Winner.startAndShow();
                      Game.state = "winner";
@@ -415,7 +435,8 @@
     	</div>
     
       <h2>voting</h2>
-      <button data-action="vote" class="transition">VOTE</button>
+      <p><span id="votes_so_far">0</span> votes so far</p>
+      <button data-action="see_winner" class="transition">DEBUG: transition to Winners state</button>
     </div>
 
     <!-- WINNER (this shows the winner of the round -->

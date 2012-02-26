@@ -19,22 +19,24 @@ echo "DEBUG: register"
 curl localhost:4567/register -d username=alex | python -m json.tool
 echo "DEBUG: submit song"
 curl localhost:4567/submit_song -d turn_id=$turn_id -d username=alex -d songname="vida tombola" | python -m json.tool
+echo "DEBUG: vote"
+curl localhost:4567/vote_for_song -d turn_id=$turn_id -d username=alex -d songname="ghosts n stuff" | python -m json.tool
 
 echo "DEBUG: register"
 curl localhost:4567/register -d username=tal | python -m json.tool
 echo "DEBUG: submit song"
 curl localhost:4567/submit_song -d turn_id=$turn_id -d username=tal -d songname="lights" | python -m json.tool
+echo "DEBUG: vote"
+curl localhost:4567/vote_for_song -d turn_id=$turn_id -d username=tal -d songname="ghosts n stuff" | python -m json.tool
 
 echo "DEBUG: register"
 curl localhost:4567/register -d username=jeff | python -m json.tool
-# echo "DEBUG: submit song"
-# curl localhost:4567/submit_song -d turn_id=$turn_id -d username=jeff -d songname="la grange" | python -m json.tool
-
-echo "DEBUG: gamestate"
-curl localhost:4567/gamestate | python -m json.tool
-
+echo "DEBUG: submit song"
+curl localhost:4567/submit_song -d turn_id=$turn_id -d username=jeff -d songname="la grange" | python -m json.tool
 echo "DEBUG: vote"
-curl localhost:4567/vote_for_song -d turn_id=$turn_id -d username=alex -d songname="ghosts n stuff" | python -m json.tool
+curl localhost:4567/vote_for_song -d turn_id=$turn_id -d username=jeff -d songname="ghosts n stuff" | python -m json.tool
+
+
 echo "DEBUG: gamestate"
 curl localhost:4567/gamestate | python -m json.tool
 echo "DEBUG: winner"
