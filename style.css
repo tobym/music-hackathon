@@ -2,6 +2,11 @@
 
 
 /* container and blocks */
+
+body {
+width: 100%;
+}
+
 header {
 font-size: 20px;
 text-align: center;
@@ -16,11 +21,61 @@ color: #999;
 
 #main {
 border: 1px #fff solid;
-padding: 20px;
+height: 600px;
 width: 100%;
-margin: 0px auto;
 
 }
+
+
+/* Your Song Div */
+#your_song {
+border: 1px #000 solid;
+width: 100%;
+height: 200px;
+
+}
+
+
+
+
+
+/* Song List Div */
+
+#song_list {
+width: 100%;
+height: 400px;
+border: 1px #fff solid;
+text-align: center;
+}
+
+li.song_album {
+width: 150px;
+height: 150px;
+border: 1px #fff solid;
+display: inline-block;
+padding: 2px;
+
+
+
+}
+
+
+/* Player List Div */
+
+#player_list {
+width: 100%;
+height: 200px;
+border: 1px #fff solid;
+}
+
+li.avatar {
+width: 40px;
+height: 40px;
+border: 1px #fff solid;
+display: inline-block;
+}
+
+
 
 /* Question to individual */.
 
@@ -31,12 +86,6 @@ margin: 0px 0px 0px 0px;
 }
 
 
-#share {
-border: 1px solid #fff;
-width: 40px;
-height: 40px;
-
-}
 
 
 /* Enemeies Block  */
