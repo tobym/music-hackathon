@@ -23,7 +23,7 @@ color: #999;
 border: 1px #fff solid;
 height: 600px;
 width: 100%;
-
+min-width: 535px;
 }
 
 
@@ -48,17 +48,32 @@ border: 1px #fff solid;
 text-align: center;
 }
 
-li.song_album {
-width: 150px;
-height: 150px;
-border: 1px #fff solid;
-display: inline-block;
-padding: 2px;
-
-
+#song_list ul {
+/* max-height: 160px;
+overflow: hidden; */
 
 }
 
+li.song_container {
+width: 150px;
+height: 200px;
+border: 1px #fff solid;
+display: inline-block;
+padding: 2px;
+}
+
+.play_song {
+width: 150px;
+height: 150px;
+
+}
+
+
+.vote img {
+width: 30px;
+height: 30px;
+
+}
 
 /* Player List Div */
 
