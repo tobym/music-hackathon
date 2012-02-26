@@ -63,9 +63,42 @@ height: 20px;
 }
 
 
+/* ----- WIN SCREEN ----- */
+
+.head {
+clear: both;
+top: 50px;
+display: none;
+position:absolute;
+z-index: 1;
+left: 20px;
+
+}
+
+.ninja {
+top: 50px;
+clear:both;
+display: none;
+position:absolute;
+z-index: 0;
+margin: 0px 0px 0px -70px;
+display: block;
+
+}
 
 
-/* Rules */
+.win_text{
+display: none;
+top: 10px;
+float: right;
+position: absolute;
+z-index: 2
+
+
+/* ----- END OF WIN SCREEN -----  */
+
+
+/* RULES */
 
 
 #rules {
@@ -74,6 +107,12 @@ width: 70%;
 margin: 0px auto;
 
 }
+
+
+/* END OF RULES */
+
+
+
 @media only screen and (min-width: 35em) {
   
 

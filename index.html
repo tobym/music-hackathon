@@ -7,8 +7,12 @@
 <link rel="stylesheet" href="style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="sp://import/css/adam.css">
 <script src="libs/js/jquery.min.js"></script>
+<<<<<<< HEAD
 <script src="libs/js/mustache.js"></script>
 
+=======
+<script src="libs/js/functions.js"></script>
+>>>>>>> updated images.
 <script type="text/javascript">
 
   var Game = {
@@ -163,20 +167,54 @@
 
 
 
+<div class="win_text">
+<p> Congratulations, you won the round. You have destroyed your opponents, this time. </p>
+</div>
 
+<div class="head">
+<img src="images/tandy.jpg"/>
+</div>
+
+
+<div class="ninja">
+<img src="images/ninja.jpg"/>
+
+</div>
 
 
 
 
   <div id="main" style="display:none">
+   	 <p class="question">Question: What is the best song to walk your dog to?</p>
 
+<script>
 
-			search.tracks.forEach(function(track) {
-//			console.log(track);
-	});
-});
-    <p class="question">Question: What is the best song to walk your dog to?</p>
+function win_and_slide() {
+		$(document).ready(function() {	
+			//animate ninja and player's head
+			$('.head, .ninja').show();
 
+			$('.head, .ninja').animate({
+		    	left: '+=200px',
+			}, 2000, function() {
+		    // Animation complete.
+	
+			});
+			//animate winning text
+			$('.win_text').show()
+	
+			$('.win_text').animate({
+	    		right: '+=200px',
+			}, 2000, function() {
+		    // Animation complete.
+	
+			});
+		});
+	}
+
+win_and_slide();
+               	               	
+</script>        	
 
 
     <form>
