@@ -28,7 +28,35 @@
 
   var Preview = {
     stopAndHide : function() { $("#preview").hide(); },
-    startAndShow : function() { $("#preview").show(); }
+    startAndShow : function() {
+      var songname = $("#submission_input").val();
+      // Spotify search.
+      var search = new models.Search(songname, {
+        searchType : models.SEARCHTYPE.NORMAL,
+        searchAlbums: false,
+        searchPlaylists: false,
+        searchArtists: false, // eventually make this true
+        searchTracks: true
+      });
+      
+      search.observe(models.EVENT.CHANGE, function() {
+        var track = search.tracks[0];
+        $("#song_and_artist_name").html(track.name + ", by " + track.artists[0].name);
+        Preview.songname = track.name;
+        Preview.songuri = track.uri;
+        var image = new views.Image(track.album.data.cover);
+        $(image.node).css('width', '150px');
+        $(image.node).css('height', '150px');
+        $(image.node).css('background-size', '100%');
+        $('#preview .preview_song_left').append(image.node);
+        // search.tracks.forEach(function(track) {
+          // console.log(track.name);
+        // });
+      });
+      search.appendNext();
+
+      $("#preview").show();
+    }
   };
 
   var Pending = {
@@ -219,8 +247,10 @@
                      Preview.startAndShow();  // So you can submit a song.
                      Game.state = "preview";
                    } else if ("submit" === action && "preview" === Game.state) {
-                     var songname = $("#submission_input").val();
-                     Game.post("/submit_song", {"username" : Game.username, "songname" : songname}, function(data) {
+                     // var songname = $("#submission_input").val();
+                     var songname = Preview.songname;
+                     var songuri = Preview.songuri;
+                     Game.post("/submit_song", {"username" : Game.username, "songname" : songname, "songuri": songuri}, function(data) {
                         hideAllStates();
                         Pending.startAndShow();
                         Game.state = "pending";
@@ -331,16 +361,16 @@
   }
 
 
-  // Playing around with spotify API. Search doesn't seem to work in the console.
+  // Playing around with spotify API.
   // $(function(){
-    var search = new models.Search("Counting Crows");
-    // search.localResults = models.LOCALSEARCHRESULTS.APPEND;
-    search.observe(models.EVENT.CHANGE, function() {
-      search.tracks.forEach(function(track) {
-        console.log(track.name);
+    var foosearch = new models.Search("Counting Crows");
+    // foosearch.localResults = models.LOCALSEARCHRESULTS.APPEND;
+    foosearch.observe(models.EVENT.CHANGE, function() {
+      foosearch.tracks.forEach(function(track) {
+        console.log(track);
       });
     });
-    search.appendNext();
+    foosearch.appendNext();
   // });
 
 </script>
@@ -367,8 +397,7 @@
           <img src="images/ninjastar.png"/>
           Round <span class="current">0</span> of 5
         </div>
-		
-		
+
         <div id="current_question"></div>
         <div id="current_question_keywords"></div>
   </div>
@@ -405,14 +434,14 @@
         <div id="current_question_keywords"></div>
     
     
-    <div class="preview_song">
-    <p class="internal_copy_three">IS THIS THE SONG YOU WERE LOOKING FOR?</p>
-		<div class="preview_song_left">	</div>
-				<div id="song_and_artist_name"> SONG AND ARTIST NAME HERE!!!!</div>
-    	<div class="preview_song_right"><button data-action="submit" id="preview_submit" class="transition">SUBMIT!</button></div>
-		
-    
-    </div>  
+        <div class="preview_song">
+          <p class="internal_copy_three">IS THIS THE SONG YOU WERE LOOKING FOR?</p>
+          <div class="preview_song_left">	</div>
+          <div id="song_and_artist_name"> SONG AND ARTIST NAME HERE!!!!</div>
+          <div class="preview_song_right"><button data-action="submit" id="preview_submit" class="transition">SUBMIT!</button></div>
+
+
+        </div>  
         <h2>preview</h2>
      
     </div>
@@ -496,9 +525,16 @@
   </div>
 </div>
 
-  <script>
+<script>
 
-	var form_val = $('#submission_input').val();
+
+//win_and_slide();
+               	               	
+</script>
+
+  <script>
+//this function gets tracks from the search parameter "bohemian rhapsody"
+
     var search = new models.Search("Bohemian Rhapsody");
 
     search.observe(models.EVENT.CHANGE, function() {
@@ -506,12 +542,29 @@
       search.tracks.forEach(function(track) {
         // console.log(track);
       });
-});
+    });
 
     search.appendNext();
     
-    
-</script>
+//try go get player 
+    var player = models.player;
+		var track = models.Track.fromURI('spotify:track:749SJvmRHD43wFUnBtUJ36');
+		var image = new views.Image(track.album.data.cover);
+		$(image.node).css('width', '300px');
+		$(image.node).css('height', '300px');
+		$('body').append(image.node);
+
+		$('#play-me').click(function(){
+
+			player.playing = !(player.playing);
+			if (player.playing == true) {
+				$('#play-me').empty().append('Playing!');
+			} else {
+				$('#play-me').empty().append('Paused');
+			}
+		});
+
+  </script>        	
 
   <!-- for development -->
   <div id="game_dashboard">
