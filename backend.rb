@@ -130,3 +130,8 @@ end
 get "/debug" do
   [200, {:game => @@game.inspect}.to_json]
 end
+
+post "/debug_reset" do
+  @@game = Game.new(QUESTIONS)
+  @@game.set_turn_id(42)
+end

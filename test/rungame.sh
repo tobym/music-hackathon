@@ -1,21 +1,40 @@
-curl localhost:4567/gamestate
+#!/bin/bash
 
-echo ""
-echo -n "Input turn ID: "
-read turn_id
+# This resets the game and sets the turn_id to 42
+curl localhost:4567/debug_reset -d ''
+
+curl localhost:4567/gamestate | python -m json.tool
+
+# echo ""
+# echo -n "Input turn ID: "
+# read turn_id
+turn_id=42
 
 echo "DEBUG: register"
 curl localhost:4567/register -d username=toby | python -m json.tool
 echo "DEBUG: submit song"
-curl localhost:4567/submit_song -d turn_id=$turn_id -d username=toby -d songname="a great song" | python -m json.tool
+curl localhost:4567/submit_song -d turn_id=$turn_id -d username=toby -d songname="ghosts n stuff" | python -m json.tool
+
 echo "DEBUG: register"
 curl localhost:4567/register -d username=alex | python -m json.tool
 echo "DEBUG: submit song"
-curl localhost:4567/submit_song -d turn_id=$turn_id -d username=alex -d songname="other song" | python -m json.tool
+curl localhost:4567/submit_song -d turn_id=$turn_id -d username=alex -d songname="vida tombola" | python -m json.tool
+
+echo "DEBUG: register"
+curl localhost:4567/register -d username=tal | python -m json.tool
+echo "DEBUG: submit song"
+curl localhost:4567/submit_song -d turn_id=$turn_id -d username=tal -d songname="lights" | python -m json.tool
+
+echo "DEBUG: register"
+curl localhost:4567/register -d username=jeff | python -m json.tool
+echo "DEBUG: submit song"
+curl localhost:4567/submit_song -d turn_id=$turn_id -d username=jeff -d songname="la grange" | python -m json.tool
+
 echo "DEBUG: gamestate"
 curl localhost:4567/gamestate | python -m json.tool
+
 echo "DEBUG: vote"
-curl localhost:4567/vote_for_song -d turn_id=$turn_id -d username=alex -d songname="a great song" | python -m json.tool
+curl localhost:4567/vote_for_song -d turn_id=$turn_id -d username=alex -d songname="ghosts n stuff" | python -m json.tool
 echo "DEBUG: gamestate"
 curl localhost:4567/gamestate | python -m json.tool
 echo "DEBUG: winner"

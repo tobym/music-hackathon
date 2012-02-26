@@ -35,6 +35,12 @@ class Game
     @questions[current_question_idx]
   end
 
+  # For debug purposes
+  def set_turn_id(id)
+    @turn_id = id
+    @turn_state[:turn_id] = id
+  end
+
   # Changes the current question.
   # Eventually, make sure questions don't repeat.
   def next_turn!
