@@ -48,9 +48,9 @@ class Game
   end
 
   # FIXME what happens if two players submit the same song?
-  # FIXME player cannot submit two songs in the same turn!
   def submit_song(songname, username)
-    if submission = submissions.first{|sub| sub.submitter == username }
+    if existing_idx = submissions.index{|sub| sub.submitter == username }
+      submission = submissions[existing_idx]
       return "#{submission.submitter} already submitted #{submission.songname}"
     end
 
@@ -59,7 +59,6 @@ class Game
     true
   end
 
-  # FIXME is it really appropriate to have duplicate submissions?
   # ghetto error responses = true for success, an error message string if failure. Scala's Either would be nice here
   def vote_for_song(songname, username)
     # Only vote once per turn
