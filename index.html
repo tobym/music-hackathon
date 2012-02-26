@@ -608,15 +608,27 @@ $(document).ready(function() {
         {{#submissions}}
         <li class="song_container" id="{{songid}}">
         <span class="songname">{{songname}}</span>
+        <table>
+          <tr>
+            <td>
+              <div>
         <div class="play_song">
         </div>
+        <div style="clear:both">&nbsp;</div>
+        </div>
+      </td>
+      <td>
         {{#not_voted}}
-        <a class="vote" data-songname="{{songname}}" href="#">
-          vote
-          <img class="votebut" src="images/votebut.jpg"/>
-          <span class="songname">{{songname}}</span>
-        </a>
+        <div class="votediv" class="position:relative; left: 180px;">
+          <a class="vote" data-songname="{{songname}}" href="#">
+            <img class="votebut" src="images/votebut.jpg"/>
+            <span class="songname">{{songname}}</span>
+          </a>
+        </div>
         {{/not_voted}}
+      </td>
+    </tr>
+  </table>
         </li>
         {{/submissions}}
       </ul>
