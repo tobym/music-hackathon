@@ -193,10 +193,44 @@ border-radius: 5px;
 
 
 
+/* PREVIEW SONG STATE */
+.preview_song {
+	width: 600px;
+	height: 180px;
+	margin: 20px auto;
+	padding: 20px 10px;
+	clear: both;
+	background: #252525;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.preview_song .preview_song_left {
+	width: 150px;
+	height: 150px;	
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	background: #000;
+
+}
+
+.preview_song .preview_song_right {
+float: right;
+
+}
+
+#preview_submit {
+background: #80bb00;
+border: 1px solid #80bb00;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+
+
+}
+
+.
 
 /* PENDING SONG STATE */
-
-
 
 .pending_round_status {
 width: 600px;

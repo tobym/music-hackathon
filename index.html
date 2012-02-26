@@ -311,10 +311,13 @@
   </div>
 
 
+  <div id="round_and_question"> 
+        <div id="round">
+          <img src="images/ninjastar.png"/>
+        </div>
 
-
-  <div id="round">
-    1
+        <div id="current_question"></div>
+        <div id="current_question_keywords"></div>
   </div>
 
   <div id="state_container">
@@ -335,14 +338,7 @@
 
     <!-- QUESTION and SUBMIT -->
     <div id="question" style="display:none">
-      <div id="round_and_question"> 
-        <div id="round">
-          <img src="images/ninjastar.png"/>
-        </div>
-
-        <div id="current_question"></div>
-        <div id="current_question_keywords"></div>
-      </div>
+      
 
       <div class="select_song">
         SELECT YOUR SONG: <input type="text" id="submission_input" placeholder="Song title..."/>
@@ -352,31 +348,35 @@
 
     <!-- PREVIEW (the song you just searched for -->
     <div id="preview" style="display:none">
-      <div id="round_and_question"> 
-        <div id="round">
-          <img src="images/ninjastar.png"/>
-        </div>
-
         <div id="current_question"></div>
         <div id="current_question_keywords"></div>
       </div>
     
-    <div class="preview_song">
+    <div class="preview_song">	
+		<div class="preview_song_left">		</div>
+		
+
+    	<div class="preview_song_right"><button data-action="submit" id="preview_submit" class="transition">SUBMIT!</button></div>
+
     
-    
-    
-    </div>
-      
-      
-      <h2>preview</h2>
-      <button data-action="submit" class="transition">SUBMIT</button>
+    </div>  
+        <h2>preview</h2>
+     
     </div>
 
 
     <!-- PENDING (wait until everyone has submitted a song -->
     <div id="pending" style="display:none">
+    	<div id="round_and_question"> 
+        	<div id="round">
+	        <img src="images/ninjastar.png"/>
+        </div>
+        <div id="current_question"></div>
+        
+        <div id="current_question_keywords"></div>
+    </div>
     
-     <div class="pending_song">
+    <div class="pending_song">
 			<div class="pending_song_left">
 				<p class="internal_copy">YOUR ENTRY IS IN. AWAITING YOUR OPPONENTS... </p>
 				<p class="internal_copy_two">Tip: Obviously you can’t vote for your own song, but your friends can vote for yours 
