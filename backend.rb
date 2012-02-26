@@ -7,13 +7,14 @@ require "hackathon"
 
 configure do
   QUESTIONS = [
-    Question.new({:question => "What is the best song to walk your dog to?", :keywords => ["dog"]}),
-    Question.new({:question => "What is the best song to study to?", :keywords => ["study"]}),
-    Question.new({:question => "What is the best song to work to?", :keywords => ["work"]}),
-    Question.new({:question => "What is the best song to rage to?", :keywords => ["rage"]}),
-    Question.new({:question => "What is the best song to relax to?", :keywords => ["relax"]}),
-    Question.new({:question => "What is the best song to run to?", :keywords => ["run"]}),
-    Question.new({:question => "What is the best song to work out to?", :keywords => ["work out", "exercise"]})
+    # Question.new({:question => "What is the best song to walk your dog to?", :keywords => ["dog"]}),
+    # Question.new({:question => "What is the best song to study to?", :keywords => ["study"]}),
+    # Question.new({:question => "What is the best song to work to?", :keywords => ["work"]}),
+    # Question.new({:question => "What is the best song to rage to?", :keywords => ["rage"]}),
+    # Question.new({:question => "What is the best song to relax to?", :keywords => ["relax"]}),
+    # Question.new({:question => "What is the best song to run to?", :keywords => ["run"]}),
+    # Question.new({:question => "What is the best song to work out to?", :keywords => ["work out", "exercise"]})
+    Question.new({:question => "best song for getting a big raise?", :keywords => ["money", "job"]})
   ]
 
   @@game = Game.new(QUESTIONS)

@@ -315,6 +315,7 @@
                      hideAllStates();
                      Winner.startAndShow();
                      Game.state = "winner";
+                     win_and_slide(); // for demo
                    } else if ("next_round" === action && "winner" === Game.state) {
                      Game.post("/next_turn", {"username" : Game.username, "songname" : songname}, function(data) {
                       hideAllStates();
@@ -368,6 +369,7 @@
       Game.post("/vote_for_song", {"username" : Game.username, "songname" : songname}, function(data) {
         $("#song_list .vote").hide();
         Game.voted = true;
+        Game.transition("see_winner"); // for demo
       });
     });
 
@@ -551,15 +553,17 @@ $(document).ready(function() {
     			
     	</div>
     
-      <h2>voting</h2>
-      <p><span id="votes_so_far">0</span> votes so far</p>
-      <button data-action="see_winner" class="transition">DEBUG: transition to Winners state</button>
+        <!-- comment out for demo -->
+      <!-- <h2>voting</h2> -->
+      <!-- <p><span id="votes_so_far">0</span> votes so far</p> -->
+      <!-- <button data-action="see_winner" class="transition">DEBUG: transition to Winners state</button> -->
     </div>
 
     <!-- WINNER (this shows the winner of the round -->
     <div id="winner" style="display:none">
       <h2>winner</h2>
-      <p id="win_msg"><span class="username"></span> wins "<span class="question"></span>" with <span class="votes"></span> votes for "<span class="songname"></span>"!</p>
+      <!-- commented out for demo
+      <p id="win_msg"><span class="username"></span> wins "<span class="question"></span>" with <span class="votes"></span> votes for "<span class="songname"></span>"!</p> -->
       <button data-action="next_round" class="transition">NEXT ROUND</button>
     </div>
 
