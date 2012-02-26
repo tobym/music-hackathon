@@ -53,11 +53,17 @@ class Game
     @players << username unless @players.include? username
   end
 
-  # FIXME what happens if two players submit the same song?
   def submit_song(songname, username)
+    return "Submit a real song!" if songname.strip == ""
+
     if existing_idx = submissions.index{|sub| sub.submitter == username }
       submission = submissions[existing_idx]
       return "#{submission.submitter} already submitted #{submission.songname}"
+    end
+
+    if existing_idx = submissions.index{|sub| sub.songname == songname }
+      submission = submissions[existing_idx]
+      return "Too bad! Someone else already submitted #{submission.songname}"
     end
 
     @turn_state[:submissions] << Submission.new(songname, username)
