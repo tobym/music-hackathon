@@ -123,6 +123,7 @@ get "/winner" do
       :votes => sub.votes.length,
       :submitter => sub.submitter
     }},
+    :question => @@game.current_question.to_hash,
     :num_voted => num_voted,
     :num_not_voted => @@game.players.length - num_voted,
   }.to_json]

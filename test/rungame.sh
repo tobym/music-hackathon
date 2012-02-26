@@ -37,6 +37,10 @@ echo "DEBUG: vote"
 curl localhost:4567/vote_for_song -d turn_id=$turn_id -d username=jeff -d songname="ghosts n stuff" | python -m json.tool
 
 
+echo "DEBUG: vote"
+curl localhost:4567/vote_for_song -d turn_id=$turn_id -d username=toby -d songname="lights" | python -m json.tool
+
+
 echo "DEBUG: gamestate"
 curl localhost:4567/gamestate | python -m json.tool
 echo "DEBUG: winner"

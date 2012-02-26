@@ -84,7 +84,16 @@
 
   var Winner = {
     stopAndHide : function() { $("#winner").hide(); },
-    startAndShow : function() { $("#winner").show(); }
+    startAndShow : function() {
+      $.get(Game.api_host + "/winner", function(data) {
+        var winning_submission = data.winners[0]; // if there's a tie...sorry dude, there can be only one
+        $("#win_msg .username").html(winning_submission.submitter);
+        $("#win_msg .question").html(data.question.question);
+        $("#win_msg .votes").html(winning_submission.votes);
+        $("#win_msg .songname").html(winning_submission.songname);
+      });
+      $("#winner").show();
+    }
   };
 
   var Game = {
@@ -194,6 +203,7 @@
                    if ("register" === action && "registration" === Game.state) {
                      Game.refreshGamestate(); // To pull latest player list.
                      $("#opponents").show(); // Show the stuff that was filled in in the background by refreshGamestate
+                     // NOTE: the user registration actually happens in a separate "on click" hook...eventually bring that in here
 
                      hideAllStates();
                      Question.startAndShow();
@@ -438,6 +448,7 @@
     <!-- WINNER (this shows the winner of the round -->
     <div id="winner" style="display:none">
       <h2>winner</h2>
+      <p id="win_msg"><span class="username"></span> wins "<span class="question"></span>" with <span class="votes"></span> votes for "<span class="songname"></span>"!</p>
       <button data-action="next_round" class="transition">NEXT ROUND</button>
     </div>
 
