@@ -43,6 +43,7 @@
               this.update_message("Game out of sync...resyncing");
               refreshGamestate();
             };
+          }
         },
         dataType: "json"
       });
@@ -68,7 +69,7 @@
     /* Instantiate the global sp object; include models & views */
     var sp = getSpotifyApi(1);
     var models = sp.require('sp://import/scripts/api/models');
-	var views = sp.require('sp://import/scripts/api/views');
+    var views = sp.require('sp://import/scripts/api/views');
 
     /*
      * Register username and join the (current global) game.
@@ -100,8 +101,8 @@
      */
     $("#submit_btn").on("click", function() {
       var songname = $("#submission_input").val();
-      $.post(Game.api_host + "/submit_song", {username : Game.username, turn_id : Game.turn_id, songname : }, function(data) {
-
+      $.post(Game.api_host + "/submit_song", {"username" : Game.username, "turn_id" : Game.turn_id, "songname" : songname}, function(data) {
+        console.log(data);
       });
     });
 
