@@ -208,14 +208,14 @@
 
 
 
-	<div id="welcome_screen"> <!-- WELCOME/START -->
+	<div id="welcome_screen"> <!-- WELCOME/REGISTER -->
 		<h1 class="intro_title"> What's the best song ______?</h1>
 		
 		<p class="intro_copy"> Fight for your honor against other ninjas (AKA your friends) by picking the best song for every situation</p>
 
 	</div> 
 
-  <!-- REGISTER -->
+
   	<div id="register">
     	<input type="text" id="username" placeholder="Enter Your Name"/>
 	    <button id="register_btn">Play Now</button>
@@ -230,8 +230,8 @@
 	
 
 		<div id="round_and_question"> 
-			 <div id="round">
-			 	<img src="images/ninjastar.png"/>
+			 <div id="round"> <img src="images/ninjastar.png"/>
+			 	
 			</div>
 			<div id="current_question"></div>
 			<div id="current_question_keywords"></div>
@@ -243,6 +243,7 @@
     </div>
     <div class="your_opponents" style="display:none">
   		<p>YOUR OPPONENTS:</p>
+  		  <div id="player_list"></div>
   </div>
 
 
@@ -263,7 +264,7 @@ $('#register_btn').click(function() {
 <!-- Main begins here -->
 <div id="main">
   <div id="song_list"></div>
-  <div id="player_list"></div>
+
 </div> <!-- end of main -->
 
 <div id="animations" style="display:none">
