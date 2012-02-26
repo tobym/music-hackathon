@@ -201,13 +201,29 @@
       // Now we need to create the players, because Mustache can't handle this.
       console.log(state.submissions);
       $.each(state.submissions, function(idx, sub) {
-        console.log(sub);
-        console.log("the type of sub class is: " + (typeof sub));
-        console.log("the songid is: " + sub.songid);
+        // console.log(sub);
+        // console.log("the type of sub class is: " + (typeof sub));
+        // console.log("the songid is: " + sub.songid);
         var song_play_id = "#" + sub.songid + " .play_song";
-        console.log(song_play_id + " jquery found: " + $(song_play_id).size());
+        $(song_play_id).html("");
+        // console.log(song_play_id + " jquery found: " + $(song_play_id).size());
         // $(song_play_id).html("loading the player for " + sub.songname);
-        $(song_play_id).html("loading the player for " + sub.songname);
+        var track = models.Track.fromURI(sub.songuri);
+        var image = new views.Image(track.album.data.cover);
+        $(image.node).css('width', '150px');
+        $(image.node).css('height', '150px');
+        $(image.node).css('background-size', '100%');
+        $(song_play_id).append(image.node);
+
+        var tempPlaylist = new models.Playlist();
+        tempPlaylist.add(track);
+        var playlistArt = new views.Player();
+        playlistArt.track = track;
+        playlistArt.context = tempPlaylist;
+        // $("#preview .preview_song_left").html("").append(playlistArt.node);
+        $(song_play_id).append(playlistArt.node);
+        $(song_play_id + " .sp-player-button").html("Play");
+        // $(song_play_id).html("loading the player for " + sub.songname);
       });
 
       var player_list_tmpl = $("#player_list_tmpl").html();
@@ -502,7 +518,7 @@ $(document).ready(function() {
 				<p class="internal_copy">YOUR ENTRY IS IN. AWAITING YOUR OPPONENTS... </p>
 				<p class="internal_copy_two">Tip: Obviously you can’t vote for your own song, but your friends can vote for yours 
     			-- so you better have picked one they’d like!</p>
-    	 <p class="submission_iterations"><span id="submissions_so_far">0</span>submissions so far...</p>
+    	 <p class="submission_iterations"><span id="submissions_so_far">0</span> submissions so far...</p>
     	</div>
     		
     	<div class="pending_song_right"></div>
