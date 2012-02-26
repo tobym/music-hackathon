@@ -46,20 +46,23 @@
         Preview.songname = track.name;
         Preview.songuri = track.uri;
 
-        // the preview section
+        // The preview section
+        // clear it first, then add cover art and a player
+        $("#preview .preview_song_left").html("")
         var image = new views.Image(track.album.data.cover);
-        // $(image.node).css('width', '150px');
-        // $(image.node).css('height', '150px');
-        // $(image.node).css('background-size', '100%');
-        // $('#preview .preview_song_left').append(image.node);
+        $(image.node).css('width', '150px');
+        $(image.node).css('height', '150px');
+        $(image.node).css('background-size', '100%');
+        $('#preview .preview_song_left').append(image.node);
 
         var tempPlaylist = new models.Playlist();
         tempPlaylist.add(track);
         var playlistArt = new views.Player();
         playlistArt.track = track;
         playlistArt.context = tempPlaylist;
-        $("#preview .preview_song_left").html("").append(playlistArt.node);
-        // $("#preview .preview_song_left").append(playlistArt.node);
+        // $("#preview .preview_song_left").html("").append(playlistArt.node);
+        $("#preview .preview_song_left").append(playlistArt.node);
+        $("#preview .preview_song_left .sp-player-button").html("Play");
 
 
         // the "your submission" section in the Voting view
