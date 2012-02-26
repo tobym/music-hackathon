@@ -25,7 +25,7 @@ curl backend:4567/vote_for_song -d turn_id=$turn_id -d username=alex -d songname
 echo "DEBUG: register"
 curl backend:4567/register -d username=tal | python -m json.tool
 echo "DEBUG: submit song"
-curl backend:4567/submit_song -d turn_id=$turn_id -d username=tal -d songname="lights" | python -m json.tool
+# curl backend:4567/submit_song -d turn_id=$turn_id -d username=tal -d songname="lights" | python -m json.tool
 echo "DEBUG: vote"
 curl backend:4567/vote_for_song -d turn_id=$turn_id -d username=tal -d songname="ghosts n stuff" | python -m json.tool
 
