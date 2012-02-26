@@ -160,14 +160,16 @@
 <br/>
 
 
-	<form>
-		Your Answer: <input id="song_answer" type="text" placeholder="Enter Song"/>
-		<input class="new-button" type="submit" value="Submit" name="Submit"/>
-		
 
 
 
-<div class="win_text">
+
+
+<!-- Main begins here -->
+  <div id="main">
+   
+   
+			<div class="win_text">
 <p> Congratulations, you won the round. You have destroyed your opponents, this time. </p>
 </div>
 
@@ -177,15 +179,16 @@
 
 
 <div class="ninja">
-<img src="images/ninja.jpg"/>
+<!-- <img src="images/ninja.jpg"/> -->
 
 </div>
 
+        	
 
 
+  </div> <!-- end of main -->
 
-  <div id="main" style="display:none">
-   	 <p class="question">Question: What is the best song to walk your dog to?</p>
+<script>
 
 <script>
 
@@ -212,32 +215,15 @@ function win_and_slide() {
 		});
 	}
 
-win_and_slide();
+//win_and_slide();
                	               	
-</script>        	
-
-
-    <form>
-      Your Answer: <input type="text" placeholder="Enter Song"/>
-      <input class="new-button" type="submit" value="Submit" name="Submit"/>
-
-
-    </form>
-
-
-    <div class="enemies">
-      <p class="question">Other Answers</p>
-      <form class="enemy_block">	
-        Player One: <input class="enemy" type="text" placeholder=""/>		<a href=""><img class="thumb" src="images/thumb.png"/></a><br/>
-        Player Two: <input class="enemy" type="text" placeholder=""/>	 	<a href=""><img class="thumb" src="images/thumb.png"/></a><br/>
-        Player Three: <input class="enemy" type="text" placeholder=""/>		<a href=""><img class="thumb" src="images/thumb.png"/></a><br/>
-        HAL9000 of Echonest: <input class="enemy" type="text" placeholder=""/>		<a href=""><img class="thumb" src="images/thumb.png"/></a>
-      </form>
-    </div>
+</script>
+               	               	
+</script>
 
 
 
-  </div> <!-- end of main -->
+
 
 
 
