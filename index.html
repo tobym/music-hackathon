@@ -21,9 +21,29 @@
     log: function(msg) {
       $("#debug_log").append("<p>" + msg + "</p>");
     },
+
     api_host : "http://backend:4567",
     username : "",
     turn_id : "",
+
+    // Displays the given game state.
+    displayGamestate : function (state) {
+      var $dashboard = $("#game_dashboard");
+
+      var tmpl = $("#gamestate_tmpl").html();
+      $dashboard.html(Mustache.render(tmpl, state));
+    },
+
+    // Pull latest state and displays it.
+    refreshGamestate : function() {
+      console.log("refreshing game state...");
+      $.get(Game.api_host + "/gamestate", function(data) {
+        Game.turn_id = data.turn_id;
+        Game.displayGamestate(data);
+        console.log("successfully refreshed game state.");
+      });
+    },
+
     // Wraps jQuery.post and auto re-syncs game state if it is messed up for some reason.
     post : function(path, data, success) {
       console.log("Inside Game.post");
@@ -37,15 +57,18 @@
         data: data,
         success: function(data, textStatus, jqXHR) {
           success(data, textStatus, jqXHR);
+          Game.refreshGamestate();
         },
         error: function(jqXHR, textStatus, errorThrown) {
+          // FIXME: could use 409 for turn_id conflict, and 400 for other errors like a user submitting twice in one turn.
           if (400 == jqXHR.status) {
             // console.debug(jqXHR);
             // console.debug(textStatus);
             // console.debug(errorThrown);
             // parse responseText
-            refreshGamestate();
-            Game.update_message("Woops, had an error. Try that one more time!");
+            Game.update_message("Error: " + jqXHR.responseText);
+            Game.refreshGamestate();
+            // Game.update_message("Woops, had an error. Try that one more time!");
             console.log("got a 400 in the Error callback");
           }
         },
@@ -53,22 +76,6 @@
       });
     }
   };
-
-  function displayGamestate(state) {
-    var $dashboard = $("#game_dashboard");
-
-    var tmpl = $("#gamestate_tmpl").html();
-    $dashboard.html(Mustache.render(tmpl, state));
-  }
-
-  function refreshGamestate() {
-    console.log("refreshing game state...");
-    $.get(Game.api_host + "/gamestate", function(data) {
-      Game.turn_id = data.turn_id;
-      displayGamestate(data);
-      console.log("successfully refreshed game state.");
-    });
-  }
 
   $(document).ready(function() {
     /* Instantiate the global sp object; include models & views */
@@ -112,15 +119,22 @@
     });
 
     $("#debug").on("click", function() {
-      refreshGamestate();
+      Game.refreshGamestate();
     });
 
   });
+
+  // initialize game state
+  Game.refreshGamestate();
 
 </script>
 </head>
 
 <body>
+  <div id="debug_log" style="clear:both">
+    <h2>Debug Log</h2>
+  </div>
+  
 
   <li><a href="sp://music-hackathon/rules.html"> Read the Rules</a></li>
 
@@ -322,6 +336,6 @@ function win_and_slide() {
       {{/submissions}}
     </ul>
   </script>
-  
+
 </body>
 </html>

@@ -78,12 +78,18 @@ end
 #   :turn_id
 #   :songname
 post "/submit_song" do
-  @@game.submit_song params[:songname], params[:username]
-  [200, {
-    :message => "Thanks for submitting #{params[:songname]}, #{params[:username]}",
-    :turn_id => @@game.turn_id,
-    :songname => params[:songname]
-  }.to_json]
+  true_or_error_msg = @@game.submit_song params[:songname], params[:username]
+  if true == true_or_error_msg
+    [200, {
+      :message => "Thanks for submitting #{params[:songname]}, #{params[:username]}",
+      :turn_id => @@game.turn_id,
+      :songname => params[:songname]
+    }.to_json]
+  else
+    [400, {
+      :message => true_or_error_msg
+    }.to_json]
+  end
 end
 
 # User votes for a song.

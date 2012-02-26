@@ -50,7 +50,13 @@ class Game
   # FIXME what happens if two players submit the same song?
   # FIXME player cannot submit two songs in the same turn!
   def submit_song(songname, username)
+    if submission = submissions.first{|sub| sub.submitter == username }
+      return "#{submission.submitter} already submitted #{submission.songname}"
+    end
+
     @turn_state[:submissions] << Submission.new(songname, username)
+
+    true
   end
 
   # FIXME is it really appropriate to have duplicate submissions?
