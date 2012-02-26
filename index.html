@@ -555,46 +555,6 @@
                	               	
 </script>
 
-  <script>
-//this function gets tracks from the search parameter "bohemian rhapsody"
-
-    var search = new models.Search("Bohemian Rhapsody");
-
-    search.observe(models.EVENT.CHANGE, function() {
-
-      search.tracks.forEach(function(track) {
-        // console.log(track);
-      });
-    });
-
-    search.appendNext();
-    
-//try go get player 
-    var player = models.player;
-		var track = models.Track.fromURI('spotify:track:749SJvmRHD43wFUnBtUJ36');
-		var image = new views.Image(track.album.data.cover);
-		$(image.node).css('width', '300px');
-		$(image.node).css('height', '300px');
-		$('body').append(image.node);
-
-		$('#play-me').click(function(){
-
-			player.playing = !(player.playing);
-			if (player.playing == true) {
-				$('#play-me').empty().append('Playing!');
-			} else {
-				$('#play-me').empty().append('Paused');
-			}
-		});
-
-  </script>        	
-
-  <!-- for development -->
-  <div id="game_dashboard">
-    <h2>this is the game dashboard</h2>
-  </div>
-
-
       <!-- <div id="your_song"> -->
         <!-- {{player_song}} -->
       <!-- </div> -->
