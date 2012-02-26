@@ -50,6 +50,12 @@
         $(image.node).css('height', '150px');
         $(image.node).css('background-size', '100%');
         $('#preview .preview_song_left').append(image.node);
+
+        image = new views.Image(track.album.data.cover);
+        $(image.node).css('width', '150px');
+        $(image.node).css('height', '150px');
+        $(image.node).css('background-size', '100%');
+        $(".your_song_submission").html("").append(image.node);
         // search.tracks.forEach(function(track) {
           // console.log(track.name);
         // });
