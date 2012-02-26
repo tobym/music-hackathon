@@ -11,29 +11,46 @@
 
 <script type="text/javascript">
 
-  $(document).ready(function() {
   var Registration = {
-    domElement : $("#registration")
+    stopAndHide : function() { $("#registration").hide(); },
+    startAndShow : function() { $("#registration").show(); }
   };
 
   var Question = {
-    domElement : $("#question")
+    stopAndHide : function() { $("#question").hide(); },
+    startAndShow : function() { $("#question").show(); }
   };
 
   var Preview = {
-    domElement : $("#preview")
+    stopAndHide : function() { $("#preview").hide(); },
+    startAndShow : function() { $("#preview").show(); }
   };
 
   var Pending = {
-    domElement : $("#pending")
+    stopAndHide : function() {
+      $("#pending").hide();
+      // FIXME stop polling for submissions
+    },
+    startAndShow : function() {
+      $("#pending").show();
+      // FIXME start polling to see if everyone else is done submitting
+    }
   };
 
   var Voting = {
-    domElement : $("#voting")
+    stopAndHide : function() {
+      $("#voting").hide();
+      // FIXME stop polling for votes
+    },
+    startAndShow : function() {
+      $("#voting").show();
+      // FIXME start polling to see if everyone else is done voting
+    }
   };
 
   var Winner = {
-    domElement : $("#winner")
+    stopAndHide : function() { $("#winner").hide(); },
+    startAndShow : function() { $("#winner").hide(); }
   };
 
   var Game = {
@@ -59,7 +76,7 @@
       $("button.transition").on("click", function() {
         Game.transition($(this).attr("data-action"));
       });
-      Registration.domElement.show();
+      Registration.startAndShow();
       Game.refreshGamestate();
     },
 
@@ -68,49 +85,6 @@
       Game.username = "";
       Game.turn_id = "";
       Game.refreshGamestate();
-    },
-
-    // State machine control.
-    transition : function(action) {
-                   console.log("Attempting to transition with " + action + " from " + Game.state);
-
-                   // Convenience function.
-                   var hideAllStates = function() {
-                     $.each(Game.stateControllers, function(idx, val) {
-                       val.domElement.hide();
-                     });
-                   };
-
-                   if ("register" === action && "registration" === Game.state) {
-                     hideAllStates();
-                     Question.domElement.show();
-                     Game.state = "question";
-                   } else if ("search" === action && ("question" === Game.state || "preview" === Game.state)) {
-                     hideAllStates();
-                     Question.domElement.show(); // So you can search again.
-                     Preview.domElement.show();  // So you can submit a song.
-                     Game.state = "preview";
-                   } else if ("submit" === action && "preview" === Game.state) {
-                     hideAllStates();
-                     Pending.domElement.show();
-                     Game.state = "pending";
-                   } else if ("see_submissions" === action && "pending" === Game.state) {
-                     hideAllStates();
-                     Voting.domElement.show();
-                     Game.state = "voting";
-                   } else if ("vote" === action && "voting" === Game.state) {
-                     // FIXME wait for automatic transition based on state of other player's votes.
-                     hideAllStates();
-                     Winner.domElement.show();
-                     Game.state = "winner";
-                   } else if ("next_round" === action && "winner" === Game.state) {
-                     hideAllStates();
-                     Question.domElement.show();
-                     Game.state = "question";
-                   } else {
-                     // Illegal transition.
-                     Game.log("Illegal transition " + action + " from " + Game.state);
-                   }
     },
 
     // Displays the given game state.
@@ -156,7 +130,7 @@
         },
         error: function(jqXHR, textStatus, errorThrown) {
           // FIXME: could use 409 for turn_id conflict, and 400 for other errors like a user submitting twice in one turn.
-          if (400 == jqXHR.status) {
+          if (400 === jqXHR.status) {
             // console.debug(jqXHR);
             // console.debug(textStatus);
             // console.debug(errorThrown);
@@ -169,8 +143,57 @@
         },
         dataType: "json"
       });
+    },
+
+    // State machine control.
+    transition : function(action) {
+                   console.log("Attempting to transition with " + action + " from " + Game.state);
+
+                   // Convenience function.
+                   var hideAllStates = function() {
+                     $.each(Game.stateControllers, function(idx, val) {
+                       val.stopAndHide();
+                     });
+                   };
+
+                   if ("register" === action && "registration" === Game.state) {
+                     Game.refreshGamestate(); // To pull latest player list.
+                     $("#opponents").show(); // Show the stuff that was filled in in the background by refreshGamestate
+
+                     hideAllStates();
+                     Question.startAndShow();
+                     Game.state = "question";
+                   } else if ("search" === action && ("question" === Game.state || "preview" === Game.state)) {
+                     hideAllStates();
+                     Question.startAndShow(); // So you can search again.
+                     Preview.startAndShow();  // So you can submit a song.
+                     Game.state = "preview";
+                   } else if ("submit" === action && "preview" === Game.state) {
+                     hideAllStates();
+                     Pending.startAndShow();
+                     Game.state = "pending";
+                   } else if ("see_submissions" === action && "pending" === Game.state) {
+                     hideAllStates();
+                     Voting.startAndShow();
+                     Game.state = "voting";
+                   } else if ("vote" === action && "voting" === Game.state) {
+                     // FIXME wait for automatic transition based on state of other player's votes.
+                     hideAllStates();
+                     Winner.startAndShow();
+                     Game.state = "winner";
+                   } else if ("next_round" === action && "winner" === Game.state) {
+                     hideAllStates();
+                     Question.startAndShow();
+                     Game.state = "question";
+                   } else {
+                     // Illegal transition.
+                     Game.log("Illegal transition " + action + " from " + Game.state);
+                   }
+                   Game.refreshGamestate();
     }
   };
+
+  $(document).ready(function() {
 
     /* Instantiate the global sp object; include models & views */
     var sp = getSpotifyApi(1);
@@ -249,16 +272,16 @@
     $('.head, .ninja').show();
 
     $('.head, .ninja').animate({
-      left: '+=200px',
+      left: '+=200px'
       }, 2000, function() {
       // Animation complete.
 
     });
     //animate winning text
-    $('.win_text').show()
+    $('.win_text').show();
 
     $('.win_text').animate({
-      right: '+=200px',
+      right: '+=200px'
       }, 2000, function() {
       // Animation complete.
     });
@@ -320,12 +343,6 @@
         SELECT YOUR SONG: <input type="text" id="submission_input" placeholder="Song title..."/>
         <button data-action="search" id="submit_btn" class="transition"></button>
       </div>
-
-      <div class="your_opponents" style="display:none">
-        <p>YOUR OPPONENTS:</p>
-        <div id="player_list"></div>
-      </div>
-
     </div>
 
 
@@ -357,6 +374,12 @@
 
 
   </div>
+
+  <div id="opponents" class="your_opponents" style="display:none">
+    <p>YOUR OPPONENTS:</p>
+    <div id="player_list"></div>
+  </div>
+
 
 
 
