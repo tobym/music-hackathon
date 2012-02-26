@@ -42,6 +42,7 @@ get "/gamestate" do
       {
         :songname => sub.songname,
         :songuri => sub.songuri,
+        :songid => sub.songuri.split(":").reverse.first, # this gets the unique part of the URI
         :submitter => sub.submitter,
         :votes => sub.votes
       }

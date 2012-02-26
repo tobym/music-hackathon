@@ -78,7 +78,7 @@
     checkPlayersSubmissions : function() {
       $.get(Game.api_host + "/gamestate", function(data) {
         // Update X out of Y players have submitted a song
-        console.log(data.submissions.length + " out of " + data.players.length + " players have submitted");
+        // console.log(data.submissions.length + " out of " + data.players.length + " players have submitted");
         $("#submissions_so_far").html(data.submissions.length);
         // Transition to next state if all players have submitted.
         if (data.submissions.length === data.players.length) {
@@ -177,6 +177,16 @@
 
       var song_list_tmpl = $("#song_list_tmpl").html();
       $("#song_list").html(Mustache.render(song_list_tmpl, state));
+      // Now we need to create the players, because Mustache can't handle this.
+      console.log(state.submissions);
+      $.each(state.submissions, function(idx, sub) {
+        console.log(sub);
+        console.log("the type of sub class is: " + (typeof sub));
+        console.log("the songid is: " + sub.songid);
+        var song_play_id = "#" + sub.songid + " .play_song";
+        console.log(song_play_id + " jquery found: " + $(song_play_id).size());
+        $(song_play_id).html("loading the player for " + sub.songname);
+      });
 
       var player_list_tmpl = $("#player_list_tmpl").html();
       $("#player_list").html(Mustache.render(player_list_tmpl, state));
@@ -589,9 +599,10 @@
     <script id="song_list_tmpl" type="text/html">
       <ul>
         {{#submissions}}
-        <li class="song_container">
-      
-        <div class="play_song"><!--TODO song player here--></div>
+        <li class="song_container" id="{{songid}}">
+        <span class="songname">{{songname}}</span>
+        <div class="play_song">
+        </div>
         {{#not_voted}}
         <a class="vote" data-songname="{{songname}}" href="#">
           vote
