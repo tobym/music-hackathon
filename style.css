@@ -182,7 +182,7 @@ border-radius: 5px;
 .your_opponents {
 	margin: 0px auto;
 	width: 600px;
-	height: 200px;
+	clear: both;
 	background: #252525;
 	padding: 20px 0 0 20px;
 	-webkit-border-radius: 5px;
@@ -277,8 +277,8 @@ border-radius: 5px;
 /* VOTING STATE */
 .voting_wrapper {
 	width: 620px;
-	height: 400px;
 	margin: 90px auto;
+	background:#252525;
 	border: 1px solid #000;
 	-webkit-border-radius: 5px;
 }
@@ -292,7 +292,8 @@ border-radius: 5px;
 
 .voting_right {
 	width: 155px;
-	height: 400px;
+	height: 100%;
+	position: relative;
 	text-align:center;
 	float: right;
 	background-color: #000;
@@ -353,7 +354,6 @@ padding: 10px 10px;
 /* Song List Div */
 
 #song_list {
-
 }
 
 #song_list ul {
@@ -362,8 +362,6 @@ margin: 0 0 0 8px;
 
 li.song_container {
 	width: 135px;
-	height: 135px;
-	display: inline-block;
 	padding: 4px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
@@ -378,8 +376,8 @@ height: 150px;
 
 
 .vote img {
-width: 30px;
-height: 30px;
+width: 60px;
+height: 60px;
 
 }
 

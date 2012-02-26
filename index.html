@@ -429,7 +429,6 @@
     			<p class ="internal_copy_four">TIME TO VOTE!</p>
     			<p class ="secondary_copy">Like the honorable ninja you are, you will vote for the 
     			best song, which is not your own.</p>
-.png"/>
     			<div id="song_list"></div>
     			</ul>
     		</div>	
@@ -438,7 +437,7 @@
 	    		<p class="voting_submission_text">Your Submission.</p>
 	    		<div class="your_song_submission"> </div>
     		</div>
-    			
+    	<div style="clear:both">&nbsp;</div>		
     			
     	</div>
     
@@ -469,13 +468,6 @@
 
 <br/>
 
-
-<!-- Main begins here -->
-<div id="main">
-  
-
-</div> <!-- end of main -->
-
 <div id="animations" style="display:none">
   <div class="win_text">
     <p> Congratulations, you won the round. You have destroyed your opponents, this time. </p>
@@ -498,6 +490,7 @@
 </script>
 
   <script>
+//this function gets tracks from the search parameter "bohemian rhapsody"
 
     var sp = getSpotifyApi(1);
     var models = sp.require('sp://import/scripts/api/models');
@@ -512,6 +505,25 @@
     });
 
     search.appendNext();
+    
+//try go get player 
+    var player = models.player;
+		var track = models.Track.fromURI('spotify:track:749SJvmRHD43wFUnBtUJ36');
+		var image = new views.Image(track.album.data.cover);
+		$(image.node).css('width', '300px');
+		$(image.node).css('height', '300px');
+		$('body').append(image.node);
+
+		$('#play-me').click(function(){
+
+			player.playing = !(player.playing);
+			if (player.playing == true) {
+				$('#play-me').empty().append('Playing!');
+			} else {
+				$('#play-me').empty().append('Paused');
+			}
+		});
+
   </script>        	
 
   <!-- for development -->
@@ -606,5 +618,6 @@
     		Welcome
     	</div>
   
+
 </body>
 </html>
