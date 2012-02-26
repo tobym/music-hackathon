@@ -88,7 +88,7 @@ font-style: helvetica;
 }
 
 h1.intro_title {
-margin: 30px 0 80px 0px;
+margin: 60px 0 80px 0px;
 text-align: center;
 font-size: 50px;
 line-height: 40px;
@@ -257,15 +257,16 @@ background: #252525;
 border-radius: 5px;
 }
 
-.pending_song .preview_song_left {
+.pending_song .pending_song_left {
 	float: left;
-	width: 308px;
+	width: 300px;
 }
 
-.pending_song .preview_song_right {
+.pending_song .pending_song_right {
 	float: right;
 	width: 150px;
 	height: 150px;
+	border: 1px solid #fff;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	background: #000;
