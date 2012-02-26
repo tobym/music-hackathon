@@ -154,10 +154,6 @@
     $("#debug").on("click", function() {
       Game.refreshGamestate();
     });
-    $("#debug_reset").on("click", function() {
-      Game.post("/debug_reset");
-      Game.refreshGamestate();
-    });
 
   });
 
@@ -195,10 +191,7 @@
   </div>
   
 
-
-
   <button id="debug">Refresh gamestate</button>
-  <button id="debug_reset">debug reset</button>
 
   <header><img src="images/logo.png"/></header>
   
@@ -345,7 +338,17 @@
     <h3>Submissions</h3>
     <ul>
       {{#submissions}}
-      <li>{{songname}} :: submitted by {{submitter}}</li>
+      <li>
+      <span>{{songname}} :: submitted by {{submitter}}</span>
+      <br/>
+      votes:
+      <ul>
+        {{#votes}}
+        <li>{{.}}</li>
+        {{/votes}}
+      </ul>
+      -------
+      </li>
       {{/submissions}}
     </ul>
   </script>
