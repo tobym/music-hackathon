@@ -197,18 +197,18 @@ border-radius: 5px;
 /* PREVIEW SONG STATE */
 
 #preview {
-width: 100%;
+
 
 }
 
 .preview_round_status {
 width: 600px;
-margin: 0x auto;
+margin: 0x auto !important; 
 }
 
 .preview_song {
 width: 600px;
-height: 280px;
+height: 180px;
 margin: 20px auto;
 padding: 20px 10px;
 clear: both;
@@ -219,21 +219,26 @@ border-radius: 5px;
 
 .preview_song .preview_song_left {
 	float: left;
-	width: 400px;
+	width: 308px;
 }
 
 .preview_song .preview_song_right {
 	float: right;
-	width: 200px;
-	height: 200px;
-	border: 1px solid #fff;
+	width: 150px;
+	height: 150px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
+	background: #000;
 
 }
 
 .internal_copy{
 font-size: 10pt;
+}
+
+.internal_copy_two{
+font-size: 10pt;
+margin: 30px 0px;
 }
 
 
