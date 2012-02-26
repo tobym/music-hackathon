@@ -44,6 +44,7 @@
       $.get(Game.api_host + "/gamestate", function(data) {
         // Update X out of Y players have submitted a song
         console.log(data.submissions.length + " out of " + data.players.length + " players have submitted");
+        $("#submissions_so_far").html(data.submissions.length);
         // Transition to next state if all players have submitted.
         if (data.submissions.length === data.players.length) {
           Game.transition("see_submissions"); // this will also clear the polling
@@ -108,6 +109,7 @@
       state.not_voted = !Game.voted;
 
       $("#round .current").html(state.round);
+      $("#submissions_so_far").html(state.submissions.length);
 
       var dashboard_tmpl = $("#gamestate_tmpl").html();
       $("#game_dashboard").html(Mustache.render(dashboard_tmpl, state));
@@ -382,15 +384,16 @@
     </div>
     
     <div class="pending_song">
-			<div class="pending_song_left">
-				<p class="internal_copy">YOUR ENTRY IS IN. AWAITING YOUR OPPONENTS... </p>
-				<p class="internal_copy_two">Tip: Obviously you can’t vote for your own song, but your friends can vote for yours 
-    			-- so you better have picked one they’d like!</p>
-    			
-    		</div>
-    		
-    		<div class="pending_song_right"></div>
-    		
+      <div class="pending_song_left">
+        <p class="internal_copy">YOUR ENTRY IS IN. AWAITING YOUR OPPONENTS... </p>
+        <p class="internal_copy_two">Tip: Obviously you can’t vote for your own song, but your friends can vote for yours 
+        -- so you better have picked one they’d like!</p>
+      </div>
+      <div>
+        <span id="submissions_so_far">0</span> submissions so far...</span>
+      </div>
+      <div class="pending_song_right"></div>
+
     </div>
        
       <h2>pending</h2>
