@@ -276,7 +276,7 @@ border-radius: 5px;
 
 /* VOTING STATE */
 .voting_wrapper {
-	width: 600px;
+	width: 620px;
 	height: 400px;
 	margin: 90px auto;
 	border: 1px solid #000;
@@ -291,7 +291,7 @@ border-radius: 5px;
 
 
 .voting_right {
-	width: 200px;
+	width: 155px;
 	height: 400px;
 	text-align:center;
 	float: right;
@@ -307,6 +307,12 @@ margin: 40px 0 0 0;
 }
 
 .your_song_submission {
+	width: 140px;
+	margin: 0px auto;	
+	height: 140px;
+	border: 1px solid #fff;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
 
 }
 
@@ -347,29 +353,26 @@ padding: 10px 10px;
 /* Song List Div */
 
 #song_list {
-width: 100%;
-height: 400px;
-border: 1px #fff solid;
-text-align: center;
+
 }
 
 #song_list ul {
-/* max-height: 160px;
-overflow: hidden; */
-
+margin: 0 0 0 8px;
 }
 
 li.song_container {
-width: 150px;
-height: 200px;
-border: 1px #fff solid;
-display: inline-block;
-padding: 2px;
+	width: 135px;
+	height: 135px;
+	display: inline-block;
+	padding: 4px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .play_song {
 width: 150px;
 height: 150px;
+
 
 }
 
