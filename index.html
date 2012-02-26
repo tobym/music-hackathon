@@ -36,7 +36,8 @@
     },
     startAndShow : function() {
       $("#pending").show();
-      // this.intervalId = setInterval(Pending.checkPlayersSubmissions, 1000);
+      this.intervalId = setInterval(Pending.checkPlayersSubmissions, 1000);
+      console.log("pending intervalId: " + this.intervalId);
       // FIXME start polling to see if everyone else is done submitting
     },
     checkPlayersSubmissions : function() {
