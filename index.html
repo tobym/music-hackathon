@@ -11,6 +11,31 @@
 
 <script type="text/javascript">
 
+  $(document).ready(function() {
+  var Registration = {
+    domElement : $("#registration")
+  };
+
+  var Question = {
+    domElement : $("#question")
+  };
+
+  var Preview = {
+    domElement : $("#preview")
+  };
+
+  var Pending = {
+    domElement : $("#pending")
+  };
+
+  var Voting = {
+    domElement : $("#voting")
+  };
+
+  var Winner = {
+    domElement : $("#winner")
+  };
+
   var Game = {
     // User-visible message
     update_message: function(msg) {
@@ -26,14 +51,66 @@
     username : "",
     turn_id : "",
     voted : false, // maintains the state of if this user has voted or not. Used for rendering/not rendering the vote buttons.
-    states : ["registration", "see_question", "preview_song", "pending", "voting", "winner"],
-    state : "registration",
+    states : ["registration", "question", "preview", "pending", "voting", "winner"],
+    state :   "registration", // initial state
+    stateControllers : [Registration, Question, Preview, Pending, Voting, Winner],
+
+    init : function() {
+      $("button.transition").on("click", function() {
+        Game.transition($(this).attr("data-action"));
+      });
+      Registration.domElement.show();
+      Game.refreshGamestate();
+    },
 
     reset : function() {
       Game.voted = false;
       Game.username = "";
       Game.turn_id = "";
       Game.refreshGamestate();
+    },
+
+    // State machine control.
+    transition : function(action) {
+                   console.log("Attempting to transition with " + action + " from " + Game.state);
+
+                   // Convenience function.
+                   var hideAllStates = function() {
+                     $.each(Game.stateControllers, function(idx, val) {
+                       val.domElement.hide();
+                     });
+                   };
+
+                   if ("register" === action && "registration" === Game.state) {
+                     hideAllStates();
+                     Question.domElement.show();
+                     Game.state = "question";
+                   } else if ("search" === action && ("question" === Game.state || "preview" === Game.state)) {
+                     hideAllStates();
+                     Question.domElement.show(); // So you can search again.
+                     Preview.domElement.show();  // So you can submit a song.
+                     Game.state = "preview";
+                   } else if ("submit" === action && "preview" === Game.state) {
+                     hideAllStates();
+                     Pending.domElement.show();
+                     Game.state = "pending";
+                   } else if ("see_submissions" === action && "pending" === Game.state) {
+                     hideAllStates();
+                     Voting.domElement.show();
+                     Game.state = "voting";
+                   } else if ("vote" === action && "voting" === Game.state) {
+                     // FIXME wait for automatic transition based on state of other player's votes.
+                     hideAllStates();
+                     Winner.domElement.show();
+                     Game.state = "winner";
+                   } else if ("next_round" === action && "winner" === Game.state) {
+                     hideAllStates();
+                     Question.domElement.show();
+                     Game.state = "question";
+                   } else {
+                     // Illegal transition.
+                     Game.log("Illegal transition " + action + " from " + Game.state);
+                   }
     },
 
     // Displays the given game state.
@@ -95,7 +172,6 @@
     }
   };
 
-  $(document).ready(function() {
     /* Instantiate the global sp object; include models & views */
     var sp = getSpotifyApi(1);
     var models = sp.require('sp://import/scripts/api/models');
@@ -157,10 +233,13 @@
       Game.refreshGamestate();
     });
 
+
+    /*
+    * Initialize game state
+    */
+    Game.init();
   });
 
-  // initialize game state
-  Game.refreshGamestate();
 
   function win_and_slide() {
     $("#animations").show();
@@ -203,6 +282,43 @@
   </div>
 
 
+  <div id="state_container">
+
+    <div id="registration" style="display:none">
+      <h2>registration</h2>
+      <button data-action="register" class="transition">REGISTER</button>
+    </div>
+
+    <div id="question" style="display:none">
+      <h2>question</h2>
+      <button data-action="search" class="transition">SEARCH</button>
+    </div>
+
+    <div id="preview" style="display:none">
+      <h2>preview</h2>
+      <button data-action="submit" class="transition">SUBMIT</button>
+    </div>
+
+    <div id="pending" style="display:none">
+      <h2>pending</h2>
+      <button data-action="see_submissions" class="transition">See all the submissions (will be automatic transition)</button>
+    </div>
+
+    <div id="voting" style="display:none">
+      <h2>voting</h2>
+      <button data-action="vote" class="transition">VOTE</button>
+    </div>
+
+    <div id="winner" style="display:none">
+      <h2>winner</h2>
+      <button data-action="next_round" class="transition">NEXT ROUND</button>
+    </div>
+
+  </div>
+
+  <div id="round">
+    1
+  </div>
 
 <div id="register_and_submit"> <!-- TOP LEVEL DIV-->
 
