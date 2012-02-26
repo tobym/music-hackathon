@@ -9,6 +9,7 @@
 <script src="libs/js/jquery.min.js"></script>
 <script src="libs/js/mustache.js"></script>
 
+
 <script type="text/javascript">
   /* Instantiate the global sp object; include models & views */
   var sp = getSpotifyApi(1);
@@ -338,26 +339,28 @@
 
 
   function win_and_slide() {
-    $("#animations").show();
 
-    //animate ninja and player's head
-    $('.head, .ninja').show();
-
-    $('.head, .ninja').animate({
-      left: '+=200px'
-      }, 2000, function() {
-      // Animation complete.
-
-    });
+	    $("#animations").show();
     
-    //animate winning text
-    $('.win_text').show();
 
-    $('.win_text').animate({
-      right: '+=200px'
-      }, 2000, function() {
-      // Animation complete.
-    });
+		//animate ninja and player's head
+		$('.head').show();
+	
+		$('.head').animate({
+		  left: '+=200px'
+		  }, 2000, function() {
+		  // Animation complete.
+	
+		});
+		
+		//animate winning text
+		$('.win_text').show();
+	
+		$('.win_text').animate({
+		  right: '+=200px'
+		  }, 2000, function() {
+		  // Animation complete.
+    	});
   }
 
 
@@ -379,7 +382,7 @@
 <body>
 
 
-  <button id="debug">Refresh gamestate</button>
+<!--  <button id="debug">Refresh gamestate</button> -->
 
   <header><img src="images/logo.png"/></header>
   
@@ -390,8 +393,7 @@
 		</li>
   	</ul>
   </div>
-
-
+  
   <div id="round_and_question"> 
         <div id="round">
           <img src="images/ninjastar.png"/>
@@ -402,19 +404,27 @@
         <div id="current_question_keywords"></div>
   </div>
 
+<script>
+
+</script>
   <div id="state_container">
 
     <!-- REGISTER -->
     <div id="registration">
       <div id="welcome_screen">
+     
         <h1 class="intro_title"> What's the best song ______?</h1>
+        	
+        
         <p class="intro_copy"> Fight for your honor against other ninjas (AKA your friends) by picking the best song for every situation</p>
       </div> 
 
       <div id="register_form">
         <input type="text" id="username" placeholder="Enter Your Name"/>
         <button data-action="register" id="register_btn" class="transition">REGISTER</button>
+        
       </div>
+       <div class="hithere"> <img src="images/ninja2.png"/></div>
     </div>
 
 
@@ -434,15 +444,15 @@
         <div id="current_question_keywords"></div>
     
     
-        <div class="preview_song">
-          <p class="internal_copy_three">IS THIS THE SONG YOU WERE LOOKING FOR?</p>
-          <div class="preview_song_left">	</div>
-          <div id="song_and_artist_name"> SONG AND ARTIST NAME HERE!!!!</div>
-          <div class="preview_song_right"><button data-action="submit" id="preview_submit" class="transition">SUBMIT!</button></div>
 
-
-        </div>  
-        <h2>preview</h2>
+    <div class="preview_song">
+	    <p class="internal_copy_three">IS THIS THE SONG YOU WERE LOOKING FOR?</p>
+		<div class="preview_song_left">	</div>
+		<div id="song_and_artist_name"> SONG AND ARTIST NAME HERE!!!!</div>
+    	<div class="preview_song_right"><button data-action="submit" id="preview_submit" class="transition">SUBMIT!</button>
+    	</div>   
+    </div>  
+     <!--   <h2>preview</h2> -->
      
     </div>
 
@@ -454,24 +464,24 @@
 				<p class="internal_copy">YOUR ENTRY IS IN. AWAITING YOUR OPPONENTS... </p>
 				<p class="internal_copy_two">Tip: Obviously you can’t vote for your own song, but your friends can vote for yours 
     			-- so you better have picked one they’d like!</p>
-    	 <p class="submission_iterations"><span id="submissions_so_far">0</span>submmissions so far...</p>
+    	 <p class="submission_iterations"><span id="submissions_so_far">0</span>submissions so far...</p>
     	</div>
     		
     	<div class="pending_song_right"></div>
     </div>
        
-      <h2>this is the pending state</h2>
-      <button data-action="see_submissions" class="transition">See all the submissions (will be automatic transition)</button>
+
     </div>
 
-
+<!--      <h2>this is the pending state</h2>
+      <button data-action="see_submissions" class="transition">See all the submissions (will be automatic transition)</button> -->
     <!-- VOTING (vote for a song, then wait until everyone else has also voted -->
     <div id="voting" style="display:none">
     	<div class="voting_wrapper">
     		<div class="voting_left"> 
     			<p class ="internal_copy_four">TIME TO VOTE!</p>
     			<p class ="secondary_copy">Like the honorable ninja you are, you will vote for the 
-    			best song, which is not your own.</p>
+    			best song,<br/> which is not your own.</p>
     			<div id="song_list"></div>
     			</ul>
     		</div>	
@@ -517,12 +527,12 @@
   </div>
 
   <div class="head">
-    <img src="images/tandy.jpg"/>
+    <img src="images/ninjatrans.png"/>
   </div>
 
-  <div class="ninja">
+<!--  <div class="ninja">
 	<img src="images/ninja2.png"/>
-  </div>
+  </div> -->
 </div>
 
 <script>
@@ -580,12 +590,13 @@
       <ul>
         {{#submissions}}
         <li class="song_container">
-        <span class="songname">{{songname}}</span>
-        <div class="play_song">TODO song player here</div>
+      
+        <div class="play_song"><!--TODO song player here--></div>
         {{#not_voted}}
         <a class="vote" data-songname="{{songname}}" href="#">
           vote
-          <img src="images/thumb.png"/>
+          <img class="votebut" src="images/votebut.jpg"/>
+          <span class="songname">{{songname}}</span>
         </a>
         {{/not_voted}}
         </li>
@@ -598,10 +609,10 @@
       {{#players}}
       <li class="player">
       <div class="avatar">
-        <img src="images/tandy.jpg"/>
+         <img src="/images/faces/{{username}}.jpg" alt="{{username}}"/>
       </div>
       <p>Name: {{username}}</p>
-      <img src="/images/faces/{{username}}.jpg" alt="{{username}}"/>
+     
       <p># of Points</p>
       </li>
       {{/players}}
@@ -646,19 +657,20 @@
     </ul>
   </script>
 
-<div id="debug_log" style="clear:both">
+<!-- <div id="debug_log" style="clear:both">
     <h2>Debug Log</h2>
   </div>
-  
+-->  
+<!--
   <div id="game_dashboard">
     <h2>this is the game dashboard</h2>
   </div>
-  
+
   
   <div id="message">
     		Welcome
     	</div>
-  
+-->  
 
 </body>
 </html>
