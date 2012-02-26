@@ -10,6 +10,11 @@
 <script src="libs/js/mustache.js"></script>
 
 <script type="text/javascript">
+  /* Instantiate the global sp object; include models & views */
+  var sp = getSpotifyApi(1);
+  var models = sp.require('sp://import/scripts/api/models');
+  var views = sp.require('sp://import/scripts/api/views');
+
 
   var Registration = {
     stopAndHide : function() { $("#registration").hide(); },
@@ -248,11 +253,6 @@
 
   $(document).ready(function() {
 
-    /* Instantiate the global sp object; include models & views */
-    var sp = getSpotifyApi(1);
-    var models = sp.require('sp://import/scripts/api/models');
-    var views = sp.require('sp://import/scripts/api/views');
-
     /*
      * Register username and join the (current global) game.
      */
@@ -330,6 +330,18 @@
     });
   }
 
+
+  // Playing around with spotify API. Search doesn't seem to work in the console.
+  // $(function(){
+    var search = new models.Search("Counting Crows");
+    // search.localResults = models.LOCALSEARCHRESULTS.APPEND;
+    search.observe(models.EVENT.CHANGE, function() {
+      search.tracks.forEach(function(track) {
+        console.log(track.name);
+      });
+    });
+    search.appendNext();
+  // });
 
 </script>
 </head>
@@ -485,18 +497,14 @@
 </div>
 
   <script>
-//this function gets tracks from the search parameter "bohemian rhapsoday"
-	
-    var sp = getSpotifyApi(1);
-    var models = sp.require('sp://import/scripts/api/models');
-	
-	var form_val = $('#submission_input').val();
-	var search = new models.Search(form_val);
 
-    	search.observe(models.EVENT.CHANGE, function() {
+	var form_val = $('#submission_input').val();
+    var search = new models.Search("Bohemian Rhapsody");
+
+    search.observe(models.EVENT.CHANGE, function() {
 
       search.tracks.forEach(function(track) {
-        console.log(track);
+        // console.log(track);
       });
 });
 
@@ -540,6 +548,7 @@
         <img src="images/tandy.jpg"/>
       </div>
       <p>Name: {{username}}</p>
+      <img src="/images/faces/{{username}}.jpg" alt="{{username}}"/>
       <p># of Points</p>
       </li>
       {{/players}}
