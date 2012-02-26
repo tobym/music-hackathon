@@ -25,14 +25,28 @@
     api_host : "http://backend:4567",
     username : "",
     turn_id : "",
+    voted : false, // maintains the state of if this user has voted or not.
+
+    reset : function() {
+      Game.voted = false;
+      Game.username = "";
+      Game.turn_id = "";
+      Game.refreshGamestate();
+    },
 
     // Displays the given game state.
     displayGamestate : function (state) {
+      // This looks ridiculous, but I want Mustache to render something when the value is false.
+      state.not_voted = !Game.voted;
+
       var dashboard_tmpl = $("#gamestate_tmpl").html();
       $("#game_dashboard").html(Mustache.render(dashboard_tmpl, state));
 
-      var main_tmpl = $("#main_tmpl").html();
-      $("#main").html(Mustache.render(main_tmpl, state));
+      var song_list_tmpl = $("#song_list_tmpl").html();
+      $("#song_list").html(Mustache.render(song_list_tmpl, state));
+
+      var player_list_tmpl = $("#player_list_tmpl").html();
+      $("#player_list").html(Mustache.render(player_list_tmpl, state));
     },
 
     // Pull latest state and displays it.
@@ -48,6 +62,7 @@
     // Wraps jQuery.post and auto re-syncs game state if it is messed up for some reason.
     post : function(path, data, success) {
       console.log("Inside Game.post");
+      data = data || {};
       data.turn_id = Game.turn_id;
       console.log(data);
       var url = this.api_host + path;
@@ -104,13 +119,13 @@
           $("#round").html("Round " + data.round);
           // $("#current_question_keywords").html(data.question.keywords);
           $("#submission").show();
-          displayGamestate(data);
+          Game.displayGamestate(data);
         });
       });
     });
 
     /*
-     * Cast your vote.
+     * Submit your answer.
      */
     $("#submit_btn").on("click", function() {
       var songname = $("#submission_input").val();
@@ -119,7 +134,28 @@
       });
     });
 
+    /*
+     * Cast your vote.
+     */
+    $("#song_list .vote").live("click", function(ev) {
+      ev.preventDefault();
+      console.log("clicked on the vote button");
+      var songname = $(this).attr("data-songname");
+      console.log("voting for " + songname);
+      Game.post("/vote_for_song", {"username" : Game.username, "songname" : songname}, function(data) {
+        $("#song_list .vote").hide();
+        Game.voted = true;
+      });
+    });
+
+    /*
+     * Debug.
+     */
     $("#debug").on("click", function() {
+      Game.refreshGamestate();
+    });
+    $("#debug_reset").on("click", function() {
+      Game.post("/debug_reset");
       Game.refreshGamestate();
     });
 
@@ -162,6 +198,7 @@
 
 
   <button id="debug">Refresh gamestate</button>
+  <button id="debug_reset">debug reset</button>
 
   <header><img src="images/logo.png"/></header>
   
@@ -172,6 +209,8 @@
 		</li>
   	</ul>
   </div>
+
+  <header>Songville with Friends</header>
 
   <div id="round">
     1
@@ -206,6 +245,8 @@
 
 <!-- Main begins here -->
 <div id="main">
+  <div id="player_list"></div>
+  <div id="song_list"></div>
 </div> <!-- end of main -->
 
 <div id="animations" style="display:none">
@@ -246,41 +287,40 @@
     search.appendNext();
   </script>        	
 
-  <script id="main_tmpl" type="text/html">
-    <div id="main">
-      <div id="your_song">
-        {{player_song}}
-      </div>
+      <!-- <div id="your_song"> -->
+        <!-- {{player_song}} -->
+      <!-- </div> -->
 
-      <div id="song_list">
-        <ul>
-          {{#submissions}}
-          <li class="song_container">
-          <span class="songname">{{songname}}</span>
-          <div class="play_song">TODO song player here</div>
-          <div class="vote"><img src="images/thumb.png"/></div>
-          </li>
-          {{/submissions}}
-        </ul>
-      </div>
+    <script id="song_list_tmpl" type="text/html">
+      <ul>
+        {{#submissions}}
+        <li class="song_container">
+        <span class="songname">{{songname}}</span>
+        <div class="play_song">TODO song player here</div>
+        {{#not_voted}}
+        <a class="vote" data-songname="{{songname}}" href="#">
+          vote
+          <img src="images/thumb.png"/>
+        </a>
+        {{/not_voted}}
+        </li>
+        {{/submissions}}
+      </ul>
+    </script>
 
-      <div id="player_list">
-        <ul>
-          {{#players}}
-          <li class="player">
-          <div class="avatar">
-            <img src="images/tandy.jpg"/>
-          </div>
-          <p>Name: {{username}}</p>
-          <p># of Points</p>
-          </li>
-          {{/players}}
-        </ul>
+  <script id="player_list_tmpl" type="text/html">
+    <ul>
+      {{#players}}
+      <li class="player">
+      <div class="avatar">
+        <img src="images/tandy.jpg"/>
       </div>
-
-    </div> <!-- end of main -->
+      <p>Name: {{username}}</p>
+      <p># of Points</p>
+      </li>
+      {{/players}}
+    </ul>
   </script>
-
 
   <script id="gamestate_tmpl" type="text/html">
     <h2>Game state</h2>
@@ -294,6 +334,8 @@
     </ul>
     <h3>Round</h3>
     <p>Round {{round}}</p>
+    <h3>Not Voted</h3>
+    <p>{{not_voted}}</p>
     <h3>Players</h3>
     <ul>
       {{#players}}
