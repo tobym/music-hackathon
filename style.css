@@ -194,19 +194,16 @@ border-radius: 5px;
 
 
 
-/* PREVIEW SONG STATE */
-
-#preview {
+/* PENDING SONG STATE */
 
 
-}
 
-.preview_round_status {
+.pending_round_status {
 width: 600px;
 margin: 0x auto !important; 
 }
 
-.preview_song {
+.pending_song {
 width: 600px;
 height: 180px;
 margin: 20px auto;
@@ -217,12 +214,12 @@ background: #252525;
 border-radius: 5px;
 }
 
-.preview_song .preview_song_left {
+.pending_song .preview_song_left {
 	float: left;
 	width: 308px;
 }
 
-.preview_song .preview_song_right {
+.pending_song .preview_song_right {
 	float: right;
 	width: 150px;
 	height: 150px;
