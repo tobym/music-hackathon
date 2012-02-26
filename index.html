@@ -107,6 +107,8 @@
       // This looks ridiculous, but I want Mustache to render something when the value is false.
       state.not_voted = !Game.voted;
 
+      $("#round .current").html(state.round);
+
       var dashboard_tmpl = $("#gamestate_tmpl").html();
       $("#game_dashboard").html(Mustache.render(dashboard_tmpl, state));
 
@@ -198,9 +200,11 @@
                      Winner.startAndShow();
                      Game.state = "winner";
                    } else if ("next_round" === action && "winner" === Game.state) {
-                     hideAllStates();
-                     Question.startAndShow();
-                     Game.state = "question";
+                     Game.post("/next_turn", {"username" : Game.username, "songname" : songname}, function(data) {
+                      hideAllStates();
+                      Question.startAndShow();
+                      Game.state = "question";
+                     });
                    } else {
                      // Illegal transition.
                      Game.log("Illegal transition " + action + " from " + Game.state);
@@ -233,7 +237,6 @@
         $.get(Game.api_host + "/gamestate", function(data) {
           $("#register").hide();
           $("#current_question").html(data.question.question);
-          $("#round").html("Round " + data.round);
           // $("#current_question_keywords").html(data.question.keywords);
           // FIXME this is old; use the new state transition
           $("#submission").show();
@@ -315,6 +318,7 @@
   <div id="round_and_question"> 
         <div id="round">
           <img src="images/ninjastar.png"/>
+          Round <span class="current">0</span> of 5
         </div>
 
         <div id="current_question"></div>

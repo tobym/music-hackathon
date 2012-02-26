@@ -51,6 +51,7 @@ end
 # FIXME this needs safe access so bad clients can't screw with the gamestate.
 post "/next_turn" do
   @@game.next_turn!
+  [200, {:turn_id => @@game.turn_id}.to_json]
 end
 
 # Get one question for the next round.
